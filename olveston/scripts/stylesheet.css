@@ -1,0 +1,250 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 8/10/2015, 8:25:24 AM
+    Author     : Arron
+*/
+html, body {
+    margin:0; /*resets to default*/
+    padding:0;
+}
+
+body {
+    position: relative; /*Needed for pop up*/
+}
+ul{list-style:none;padding:5px;}
+
+#header {
+    margin:0;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    height: 113px;
+    background: #050000 url("../images/teeth-050000-ffffff.png") repeat-x scroll 50% 100%;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+
+.headCont{
+    background: url("../images/headInfo.PNG");
+    background-repeat: no-repeat;
+    background-position: center; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+    position: absolute;
+    height: 113px;
+    z-index:1;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+.navBar{
+    background: url("../images/links.PNG");
+    background-repeat: no-repeat;
+    background-position: center; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 170px;
+    position: absolute;
+    height: 113px;
+    z-index:1;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+#page{
+    padding-bottom: 20px;
+}
+#content {
+    position: relative;
+    padding-top: 180px;
+    padding-bottom: 5px;
+    margin: 0px;    
+    vertical-align: top;
+
+    //min-height: 500px;
+}
+
+#my-thumbs-list{
+    overflow: auto;
+    width: 800px;
+    height: auto;
+}
+
+/*Tabs*/
+.tabOuter{
+    margin:auto;
+    width: 700px;
+    padding-top:25px;
+}
+div.tabs {
+    min-height: 260px;		/* No height: can grow if :target doesn't work */
+    position: relative;		/* Establish a containing block */
+    line-height: 1;		/* Easier to calculate with */
+    z-index: 0}			/* So that we can put other things behind */
+div.tabs > div {
+    display: inline}		/* We want the buttons all on one line */
+div.tabs > div > a {
+    color: black;			/* Looks more like a button than a link */
+    background: #e1e1e1;		/* Active tabs are light gray */
+    padding: 0.2em;		/* Some breathing space */
+    border: 0.1em outset #BBB;	/* Make it look like a button */
+    border-bottom: 0.1em solid #CCC;
+    text-decoration: none;} /* Visually connect tab and tab body */
+div.tabs > div:not(:target) > a {
+    border-bottom: none;		/* Make the bottom border disappear */
+    background: #fff;
+    text-decoration: none;}		/* Inactive tabs are dark gray */
+div.tabs > div:target > a,	/* Apply to the targeted item or... */
+:target #default2 > a {		/* ... to the default item */
+    border-bottom: 0.1em solid #CCC; /* Visually connect tab and tab body */
+    background: #CCC}		/* Active tab is light gray */
+div.tabs > div > div {
+    background: #e1e1e1;		/* Light gray */
+    z-index: -2;			/* Behind, because the borders overlap */
+    left: 0; top: 1.2em;		/* The top needs some calculation... */
+    bottom: 0; right: 0;		/* Other sides flush with containing block */
+    overflow: auto;		/* Scroll bar if needed */
+    padding: 0.3em;		/* Looks better */
+    border: 0.1em outset #BBB}	/* 3D look */
+div.tabs > div:not(:target) > div { /* Protect CSS1 & CSS2 browsers */
+    position: absolute }		/* All these DIVs overlap */
+div.tabs > div:target > div, :target #default2 > div {
+    position: absolute;		/* All these DIVs overlap */
+    z-index: -1}			/* Raise it above the others */
+
+div.tabs :target {
+    outline: none}
+
+/*gallery*/
+#outer{
+    width:700px;
+    margin:auto;
+}
+.wrap {
+
+    /*width: 520px;*/
+    overflow: auto;
+    white-space:nowrap;
+}
+.wrap li {
+    margin:0 10px;
+    display:inline;
+}/* gallery end*/
+
+#footer {
+    clear: both;
+    height: auto;
+    min-height: 170px;
+    padding: 10px;
+    background: #050000 url("../images/teeth-ffffff-050000.png") repeat-x scroll 50% 0px;
+    color: #FFF;
+    overflow: hidden;
+}
+.footInfo{
+    background: url("../images/footInfo.PNG");
+    background-repeat: no-repeat;
+    background-position: center; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 260px;
+    position: relative;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+
+.black-arrow {
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: #0F0000 url("../images/gallery-left.png") no-repeat scroll 50% 50%;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.black-arrow.right {
+    background-image: url("../images/gallery-right.png");
+    left: auto;
+    right: 0px;
+}
+
+#room {
+    //border: 1px solid black;
+    margin: 0px auto;
+    position: relative;
+    width: auto;
+    max-width: 931px;
+    z-index: 10;
+}
+
+.debug {
+    border: 1px solid black;
+    background: #F00;
+    float: right;
+    position:absolute;
+}
+
+#ajaxDiv {
+    display: none;
+    width: 500px;
+    height: 500px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -250px;
+    background-color: #f1c40f;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 101; /* 1 higher than the overlay layer */
+}
+
+#overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 100;
+}
+
+.itemImg {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+}
+
+#roomImg{
+    border: 1px solid black;
+}
+
+.thumb {
+    max-width: 150px;
+    width: 100%;
+    height: auto;
+}
