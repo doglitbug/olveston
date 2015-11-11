@@ -48,7 +48,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                             <div class="col-md-6">
                                 <label class="control-label" for="form_newItemImage">Upload an image:</label>
                                 <input type='file' name="form_newItemImage" onchange="readURL(this);" />
-                                <img id="blah" src="images/blank.png" alt="images/blank.png" width="250" height="250" />
+                                <img id="blah" src="../images/blank.png" alt="../images/blank.png" width="250" height="250" />
                             </div>
                             <div class="col-md-12">
                                 <input type='submit' name='createItem' value='Create Object'>
@@ -118,7 +118,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                     $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
                     $result = mysqli_query($connection, $selectString);
                     echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-                    echo("<thead><tr><th>item ID</th><th>olveston ID</th><th>item name</th><th>item description</th><th>image</th></tr></thead></table>");
+                    echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
                     ?>
                 <div class="div-table-content">
                     <table class="table table-striped table-bordered table-condensed">

@@ -46,12 +46,12 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                                 <label class="control-label" for="objectName">Object name:</label>
                                 <input type='text' id="objectName" type='text' name='form_itemName'></br>
                                 <label for="comment">Object Description:</label>
-                                <textarea class="form-control" rows="5" id="comment" type='text' name='form_newItemDescription'></textarea></br>
+                                <textarea class="form-control" rows="5" id="comment" type='text' name='form_itemDescription'></textarea></br>
                             </div>
                             <div class="col-md-6">
                                 <label class="control-label" for="form_itemImage">Upload an image:</label>
                                 <input type='file' name="form_itemImage" onchange="readURL(this);" />
-                                <img id="blah" src="images/blank.png" alt="images/blank.png" width="250" height="250" />
+                                <img id="blah" src="../images/blank.png" alt="../images/blank.png" width="250" height="250" />
                             </div>
                             <div class="col-md-12">
                                 <input type='submit' name='editItem' value='Edit Object'>
@@ -60,16 +60,8 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                         </form>
                     </fieldset>	
                     <?php
-                    //if the create an item button has been pushed, take form inputs, create new item record
-                    if (isset($_POST['createItem'])) {
-                        //current tab = 2
 
-                        $itemName = $_POST['form_newItemName'];
-                        $itemDescription = $_POST['form_newItemDescription'];
-                        $itemImage = $_POST['form_newItemImage'];
-                        createItemRecord($itemName, $itemDescription, $itemImage, $connection);
-                    } else if (isset($_POST['deleteItem'])) {
-
+                    if (isset($_POST['deleteItem'])) {
                         $itemID = $_POST['form_itemID'];
                         deleteItemRecord($itemID, $connection);
                     } else if (isset($_POST['editItem'])) {
@@ -123,7 +115,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                     $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
                     $result = mysqli_query($connection, $selectString);
                     echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-                    echo("<thead><tr><th>item ID</th><th>olveston ID</th><th>item name</th><th>item description</th><th>image</th></tr></thead></table>");
+                    echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
                     ?>
                 <div class="div-table-content">
                     <table class="table table-striped table-bordered table-condensed">
