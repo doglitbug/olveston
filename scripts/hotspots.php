@@ -3,7 +3,7 @@ function getHotspots($dbc) {
     //Get hot spots for this frame_id
     //TODO Change this to find hotspots based on room_id and frame
     //Instead of frame_id
-    $hotspotQuery = "SELECT coords,item_id,tbl_item.name,tbl_item.desc "
+    $hotspotQuery = "SELECT coords,item_id,tbl_item.name,tbl_item.description "
             . "FROM tbl_hotspot JOIN tbl_item USING (item_id) "
             . "WHERE frame_id=" . $_SESSION['frame_id'];
 
