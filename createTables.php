@@ -72,7 +72,7 @@ Date: 24/10/2015 - 4:31:57 PM
   `item_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` text,
-  `image` varchar(45) DEFAULT NULL,
+  `image` varchar(45) NULL DEFAULT 'blank.png',
   `olveston_id` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_id_UNIQUE` (`item_id`)
@@ -119,10 +119,10 @@ Date: 24/10/2015 - 4:31:57 PM
         array_push($queries, "INSERT INTO `tbl_item` VALUES "
                 . "(1,'Samuels apron','Its red and has a frog on it, I was bored and added googly eyes','apron.jpg',NULL),"
                 . "(2,'Light switch','Its a lightswitch yo','switch.jpg',NULL),"
-                . "(7,'Majong','A majong set',NULL,'5774'),"
-                . "(8,'Picture','Large picture',NULL,'1'),"
-                . "(9,'Chair','A fancy chair',NULL,'5825'),"
-                . "(10,'Urn','Large urn',NULL,'5758')");
+                . "(7,'Majong','A majong set','blank.png','5774'),"
+                . "(8,'Picture','Large picture','blank.png','1'),"
+                . "(9,'Chair','A fancy chair','blank.png','5825'),"
+                . "(10,'Urn','Large urn','blank.png','5758')");
 
         //tbl_hotspot
         array_push($queries, "INSERT INTO `tbl_hotspot` VALUES "

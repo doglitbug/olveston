@@ -2,6 +2,58 @@
 require_once("../scripts/connectvars.php");
 //Connect to database
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
+
+//Set up variables for sticky form(used in search)
+$itemID=$itemName=$itemDescription=$olveston_id="";
+$itemImage="blank.png";
+
+if (isset($_POST['deleteItem'])) {
+	$itemID = $_POST['form_itemID'];
+	deleteItemRecord($itemID, $connection);
+} else if (isset($_POST['editItem'])) {
+	$itemID = $_POST['form_itemID'];
+	$olvestonID = $_POST['form_olvestonID'];
+	$name = $_POST['form_itemName'];
+	$description = $_POST['form_itemDescription'];
+	$image = $_POST['form_itemImage'];
+	editItemRecord($itemID, $name, $description, $image, $connection);
+} else if (isset($_POST['searchItem'])) {
+	$itemID = $_POST['form_itemID'];
+	$test = searchItemRecord($itemID, $connection);
+	$olveston_id = $test['olveston_id'];
+	$itemName = $test['name'];
+	$itemDescription = $test['description'];
+	$itemImage = $test['image'];
+}
+
+function createItemRecord($itemName, $olvestonID, $itemDescription, $itemImage, $connection) {
+	$insertQuery = "INSERT into tbl_item(name, olveston_id, description, image) values ('$itemName', '$olvestonID', '$itemDescription', '$itemImage')";
+	$result = mysqli_query($connection, $insertQuery);
+}
+
+function deleteItemRecord($itemID, $connection) {
+	//find the corresponding id for the given hotspot. delete.
+	$deleteQuery = "DELETE FROM tbl_hotspot WHERE item_id = $itemID";
+	$result = mysqli_query($connection, $deleteQuery);
+
+	$deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
+	$result = mysqli_query($connection, $deleteQuery);
+}
+
+function editItemRecord($itemID, $olvestonID, $name, $description, $image, $connection) {
+	//find the corresponding id for the given hotspot. delete.
+	$updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olvestonID', description = '$description', image = '$image' WHERE item_id = $itemID";
+	$result = mysqli_query($connection, $updateQuery);
+}
+
+function searchItemRecord($itemID, $connection) {
+	$selectString = "SELECT * from tbl_item WHERE item_id = $itemID";
+	$result = mysqli_query($connection, $selectString);
+	$row = mysqli_fetch_assoc($result);
+	return $row;
+	//return the row with the given itemID
+}
+?>
 ?>			
 
 <!DOCTYPE html>
@@ -41,17 +93,19 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                         <form name="pointform" method="post" runat="server">
                             <div class="col-md-6">
                                 <label class="control-label"  for="objectID">Object ID:</label>
-                                <input type='text' id="objectID" type='text' name='form_itemID'>
+                                <input type='text' id="objectID" type='text' name='form_itemID' value='<?php echo $itemID;?>'>
                                 <input type='submit' name='searchItem' value='Search for this Object ID'></br>
+								<label class="control-label"  for="olvestonID">Olveston ID:</label>
+                                <input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $olveston_id;?>'></br>
                                 <label class="control-label" for="objectName">Object name:</label>
-                                <input type='text' id="objectName" type='text' name='form_itemName'></br>
+                                <input type='text' id="objectName" type='text' name='form_itemName'  value='<?php echo $itemName;?>'></br>
                                 <label for="comment">Object Description:</label>
-                                <textarea class="form-control" rows="5" id="comment" type='text' name='form_itemDescription'></textarea></br>
+                                <textarea class="form-control" rows="5" id="comment" type='text' name='form_itemDescription'><?php echo $itemDescription;?></textarea></br>
                             </div>
                             <div class="col-md-6">
                                 <label class="control-label" for="form_itemImage">Upload an image:</label>
                                 <input type='file' name="form_itemImage" onchange="readURL(this);" />
-                                <img id="blah" src="../images/blank.png" alt="../images/blank.png" width="250" height="250" />
+                                <img id="blah" src="../images/items/<?php echo $itemImage;?>" alt="../images/items/blank.png" width="250" height="250" />
                             </div>
                             <div class="col-md-12">
                                 <input type='submit' name='editItem' value='Edit Object'>
@@ -59,54 +113,6 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                             </div>
                         </form>
                     </fieldset>	
-                    <?php
-
-                    if (isset($_POST['deleteItem'])) {
-                        $itemID = $_POST['form_itemID'];
-                        deleteItemRecord($itemID, $connection);
-                    } else if (isset($_POST['editItem'])) {
-                        $itemID = $_POST['form_itemID'];
-                        $name = $_POST['form_itemName'];
-                        $description = $_POST['form_itemDescription'];
-                        $image = $_POST['form_itemImage'];
-                        editItemRecord($itemID, $name, $description, $image, $connection);
-                    } else if (isset($_POST['searchItem'])) {
-                        $itemID = $_POST['form_itemID'];
-                        $test = searchItemRecord($itemID, $connection);
-                        $itemName = $test['name'];
-                        $itemDescription = $test['description'];
-                        $itemImage = $test['image'];
-                        echo("<script> selectItem('$itemID', '$itemName', '$itemDescription', '$itemImage'); </script>");
-                    }
-
-                    function createItemRecord($itemName, $itemDescription, $itemImage, $connection) {
-                        $insertQuery = "INSERT into tbl_item(name, description, image) values ('$itemName','$itemDescription', '$itemImage')";
-                        $result = mysqli_query($connection, $insertQuery);
-                    }
-
-                    function deleteItemRecord($itemID, $connection) {
-                        //find the corresponding id for the given hotspot. delete.
-                        $deleteQuery = "DELETE FROM tbl_hotspot WHERE item_id = $itemID";
-                        $result = mysqli_query($connection, $deleteQuery);
-
-                        $deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
-                        $result = mysqli_query($connection, $deleteQuery);
-                    }
-
-                    function editItemRecord($itemID, $name, $description, $image, $connection) {
-                        //find the corresponding id for the given hotspot. delete.
-                        $updateQuery = "UPDATE tbl_item SET name = '$name', description = '$description', image = '$image' WHERE item_id = $itemID";
-                        $result = mysqli_query($connection, $updateQuery);
-                    }
-
-                    function searchItemRecord($itemID, $connection) {
-                        $selectString = "SELECT * from tbl_item WHERE item_id = $itemID";
-                        $result = mysqli_query($connection, $selectString);
-                        $row = mysqli_fetch_assoc($result);
-                        return $row;
-                        //return the row with the given itemID
-                    }
-                    ?>
 
                 </div>
             </div>
@@ -138,9 +144,10 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
             </div>
         </div>
         <script language="JavaScript">
-            function selectItem($itemID, $itemName, $itemDescription, $itemImage) {
+            function selectItem($itemID, $olvestonID, $itemName, $itemDescription, $itemImage) {
                 document.pointform.form_itemID.value = $itemID;
                 document.pointform.form_itemName.value = $itemName;
+				document.pointform.form_olvestonID.value = $olvestonID;
                 document.pointform.form_itemDescription.value = $itemDescription;
                 document.pointform.form_itemImage.value = $itemImage;
             }
