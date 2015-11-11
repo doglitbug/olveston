@@ -49,7 +49,7 @@ Date: 24/10/2015 - 4:31:57 PM
         array_push($queries, "CREATE TABLE `tbl_room` (
   `room_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `desc` text,
+  `description` text,
   `image` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`room_id`),
   UNIQUE KEY `room_id_UNIQUE` (`room_id`)
@@ -71,7 +71,7 @@ Date: 24/10/2015 - 4:31:57 PM
         array_push($queries, "CREATE TABLE `tbl_item` (
   `item_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `desc` text,
+  `description` text,
   `image` varchar(45) DEFAULT NULL,
   `olveston_id` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`item_id`),

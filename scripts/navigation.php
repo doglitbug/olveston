@@ -29,12 +29,12 @@ function getRooms($dbc){
     while ($row = mysqli_fetch_array($result)) {
         $room_id = $row['room_id'];
         $name = $row['name'];
-        $desc=$row['desc'];
+        $description=$row['description'];
         $image=$row['image'];
         
         $location=$_SERVER['PHP_SELF']."?room_id=$room_id";
         
-        echo "<li><a href='$location'><img class='thumb' src='images/rooms/$image' alt='$desc'/></a></li>\n";
+        echo "<li><a href='$location'><img class='thumb' src='images/rooms/$image' alt='$description'/></a></li>\n";
     }
 }
 ?>

@@ -7,7 +7,7 @@ $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Could not 
 $item = $_REQUEST['item_id'];
 
 //Get item details
-$itemQuery = "SELECT name,image,tbl_item.desc FROM tbl_item WHERE item_id='$item'";
+$itemQuery = "SELECT name,image,tbl_item.description FROM tbl_item WHERE item_id='$item'";
 
 //TODO do something with olveston_id
 //Check item exists
@@ -19,11 +19,11 @@ if (mysqli_num_rows($result) == 0) {
 //Grab frame details
     $item_details = mysqli_fetch_assoc($result);
     $name = $item_details['name'];
-    $desc = $item_details['desc'];
+    $description = $item_details['description'];
     $image = $item_details['image'];
 }
 
 echo "<h2>$name</h2>";
 echo "<img src='images/items/$image' alt='$name' class='itemImg'>";
-echo "<p>$desc</p>";
+echo "<p>$description</p>";
 ?>

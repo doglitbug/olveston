@@ -132,13 +132,17 @@ if (isset($_POST['createHotspot'])) {
                                     if (substr_count($row['coords'], ", ") == 1) {
                                         $hotspotID = $row['hotspot_id'];
                                         //Split string based on comma
-                                        $coords = explode(", ",$row['coords']);
-                                       
+                                        $coords = explode(", ", $row['coords']);
+
                                         $x = $coords[0];
                                         $y = $coords[1];
                                         $item_id = $row['item_id'];
 
-                                        echo("<img src='../images/glass.png' onclick='selectHotspot(event, $x, $y, $hotspotID, $item_id)' style='position: static ;width:40px; height:40px; left:$x; top: $y;'/>\n");
+                                        echo "<div style='width:40px; height:40px; position: absolute; top: {$y}px; left:{$x}px;'>\n";
+
+                                        echo("<img src='../images/glass.png' width='40px' height='40px' onclick='selectHotspot(event, $x, $y, $hotspotID, $item_id)' />\n");
+                                        
+                                        echo "</div>\n";
                                     }
                                 }
 

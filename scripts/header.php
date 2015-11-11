@@ -43,7 +43,7 @@ if (mysqli_num_rows($result) == 0) {
     $room_details = mysqli_fetch_assoc($result);
     $_SESSION['room_id'] = $room_details['room_id'];
     $_SESSION['room_name'] = $room_details['name'];
-    $_SESSION['room_desc'] = $room_details['desc'];
+    $_SESSION['room_description'] = $room_details['description'];
 }
 
 //***************************** Check for frame ********************************
