@@ -97,7 +97,7 @@ if (isset($_POST['createHotspot'])) {
             </div>
 
             <div class="navBar col-md-12">
-                <img src="images/links.PNG" alt="nav" >
+                <img src="../images/links.PNG" alt="nav" >
             </div>
         </header>
 
