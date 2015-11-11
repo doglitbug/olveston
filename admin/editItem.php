@@ -54,7 +54,6 @@ function searchItemRecord($itemID, $connection) {
 	//return the row with the given itemID
 }
 ?>
-?>			
 
 <!DOCTYPE html>
 <html>
@@ -143,15 +142,7 @@ function searchItemRecord($itemID, $connection) {
             <div class="footInfo">
             </div>
         </div>
-        <script language="JavaScript">
-            function selectItem($itemID, $olvestonID, $itemName, $itemDescription, $itemImage) {
-                document.pointform.form_itemID.value = $itemID;
-                document.pointform.form_itemName.value = $itemName;
-				document.pointform.form_olvestonID.value = $olvestonID;
-                document.pointform.form_itemDescription.value = $itemDescription;
-                document.pointform.form_itemImage.value = $itemImage;
-            }
-        </script>
+
         <script type="text/javascript">
             function readURL(input) {
                 if (input.files && input.files[0]) {
