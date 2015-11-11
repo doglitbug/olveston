@@ -29,7 +29,7 @@ h3{
     right: 0px;
     left: 0px;
     height: 113px;
-    background: #050000 url("../images/teeth-050000-ffffff.png") repeat-x scroll 50% 100%;
+    background: #050000 url("../../images/teeth-050000-ffffff.png") repeat-x scroll 50% 100%;
     color: #fff;
     overflow: hidden;
     font-size: 50px;
@@ -37,7 +37,7 @@ h3{
 }
 
 .headCont{
-    background: url("../images/headInfo.PNG");
+    background: url("../../images/headInfo.PNG");
     background-repeat: no-repeat;
     background-position: center; 
     margin-left: auto;
@@ -146,12 +146,12 @@ input[type=file] {
     height: auto;
     min-height: 170px;
     padding: 10px;
-    background: #050000 url("../images/teeth-ffffff-050000.png") repeat-x scroll 50% 0px;
+    background: #050000 url("../../images/teeth-ffffff-050000.png") repeat-x scroll 50% 0px;
     color: #FFF;
     overflow: hidden;
 }
 .footInfo{
-    background: url("../images/footInfo.PNG");
+    background: url("../../images/footInfo.PNG");
     background-repeat: no-repeat;
     background-position: center; 
     margin-left: auto;
