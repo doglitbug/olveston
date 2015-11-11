@@ -1,0 +1,171 @@
+
+html, body {
+    margin:0; /*resets to default*/
+    padding:0;
+}
+
+body {
+    position: relative; 
+}
+
+ul{  
+	list-style:none;
+}
+
+h3{
+	margin-top:0px;
+    color: #fff;
+}
+
+.col-md-12{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.headerBack {
+    margin:0;
+    position: absolute;
+    top: 0px;
+	padding-top: 20px;
+    right: 0px;
+    left: 0px;
+    height: 113px;
+    background: #050000 url("../images/teeth-050000-ffffff.png") repeat-x scroll 50% 100%;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+
+.headCont{
+    background: url("../images/headInfo.PNG");
+    background-repeat: no-repeat;
+    background-position: center; 
+    margin-left: auto;
+    margin-right: auto;
+	margin-top:18px;
+    padding-top: 40px;
+    position: absolute;
+    height: 113px;
+    z-index:1;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+
+.navBar{
+    padding-top: 100px;
+    position: absolute;
+    z-index:1;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+.tab-content-inner{
+	padding: 20px 0 0 20px;
+}
+
+.tab-content-outter{
+	margin-top: 0px;
+	min-height: 300px;
+	border-bottom: solid 1px #000;
+	border-left: solid 1px #000;
+	border-right: solid 1px #000;
+}
+
+.tab-content-inner{
+	padding: 20px 0 0 20px;
+}
+.container{
+    padding-top: 170px;
+}
+
+.hotspotArea{
+	margin-left:7%;
+	width: 100%;
+}
+
+.marg{
+	margin-top:20px;
+	margin-bottom:10px;
+}
+
+.margTop{
+	margin-top:20px;
+}
+
+.margTable{
+	margin-top:20px;
+	margin-bottom:0px;
+}
+.table{
+	border: solid 1px #000;
+	height: 280px !important;
+}
+.tableHead{
+	width: 100%;
+    max-width: 100%
+}
+
+table {
+    table-layout:fixed;
+}
+table th {
+
+width: auto !important;
+}
+.div-table-content {
+  height:240px;
+  overflow-y:auto;
+  margin-bottom:10px;
+}
+
+input[type=file] {
+    display: inline;
+}
+
+#content {
+    position: relative;
+    padding-top: 180px;
+    padding-bottom: 5px;
+    margin: 0px;    
+    vertical-align: top;
+
+    //min-height: 500px;
+}
+
+#footer {
+    clear: both;
+    height: auto;
+    min-height: 170px;
+    padding: 10px;
+    background: #050000 url("../images/teeth-ffffff-050000.png") repeat-x scroll 50% 0px;
+    color: #FFF;
+    overflow: hidden;
+}
+.footInfo{
+    background: url("../images/footInfo.PNG");
+    background-repeat: no-repeat;
+    background-position: center; 
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 260px;
+    position: relative;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+
+
+
