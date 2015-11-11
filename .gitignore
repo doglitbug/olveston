@@ -1,17 +1,13 @@
 #don't track database connection varibles
 scripts\connectvars.php
-olveston\scripts\connectvars.php
 
 #added at suggestion by elvis
 scripts/connectvars.php
-olveston\scripts\connectvars.php
 
 # remove files generated from netbeans on Arrons laptop
 /nbproject/*
-olveston/nbproject/*
 
 /scripts/Test.php
-olveston/scripts/Test.php
 
 # ignore temp and swap files that kate is creating
 *.swp
