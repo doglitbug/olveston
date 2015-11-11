@@ -72,8 +72,8 @@ if (isset($_POST['createHotspot'])) {
             function point_it(event) { //On click event for the div containing the room frame
                 pos_x = event.offsetX ? (event.offsetX) : event.pageX - document.getElementById("pointer_div").offsetLeft;
                 pos_y = event.offsetY ? (event.offsetY) : event.pageY - document.getElementById("pointer_div").offsetTop;
-                document.getElementById("cross").style.left = (pos_x);
-                document.getElementById("cross").style.top = (pos_y);
+                document.getElementById("cross").style.left = ""+pos_x+"px";
+                document.getElementById("cross").style.top = ""+pos_y+"px";
                 document.getElementById("cross").style.visibility = "visible";
                 document.pointform.form_x.value = pos_x;
                 document.pointform.form_y.value = pos_y;
