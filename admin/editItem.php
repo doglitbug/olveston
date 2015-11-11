@@ -4,23 +4,25 @@ require_once("../scripts/connectvars.php");
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
 
 //Set up variables for sticky form(used in search)
-$itemID=$itemName=$itemDescription=$olveston_id="";
+$itemID=$itemName=$itemDescription=$itemOlveston_id="";
 $itemImage="blank.png";
 
 if (isset($_POST['deleteItem'])) {
 	$itemID = $_POST['form_itemID'];
 	deleteItemRecord($itemID, $connection);
+	
 } else if (isset($_POST['editItem'])) {
-	$itemID = $_POST['form_itemID'];
-	$olvestonID = $_POST['form_olvestonID'];
+	$EDITitemID = $_POST['form_itemID'];
+	$olveston_id = $_POST['form_olvestonID'];
 	$name = $_POST['form_itemName'];
 	$description = $_POST['form_itemDescription'];
 	$image = $_POST['form_itemImage'];
-	editItemRecord($itemID, $name, $description, $image, $connection);
+	editItemRecord($EDITitemID, $olveston_id, $name, $description, $image, $connection);
+	
 } else if (isset($_POST['searchItem'])) {
 	$itemID = $_POST['form_itemID'];
 	$test = searchItemRecord($itemID, $connection);
-	$olveston_id = $test['olveston_id'];
+	$itemOlveston_id = $test['olveston_id'];
 	$itemName = $test['name'];
 	$itemDescription = $test['description'];
 	$itemImage = $test['image'];
@@ -40,9 +42,9 @@ function deleteItemRecord($itemID, $connection) {
 	$result = mysqli_query($connection, $deleteQuery);
 }
 
-function editItemRecord($itemID, $olvestonID, $name, $description, $image, $connection) {
+function editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection) {
 	//find the corresponding id for the given hotspot. delete.
-	$updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olvestonID', description = '$description', image = '$image' WHERE item_id = $itemID";
+	$updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olveston_id', description = '$description', image = '$image' WHERE item_id = $itemID";
 	$result = mysqli_query($connection, $updateQuery);
 }
 
@@ -95,16 +97,17 @@ function searchItemRecord($itemID, $connection) {
                                 <input type='text' id="objectID" type='text' name='form_itemID' value='<?php echo $itemID;?>'>
                                 <input type='submit' name='searchItem' value='Search for this Object ID'></br>
 								<label class="control-label"  for="olvestonID">Olveston ID:</label>
-                                <input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $olveston_id;?>'></br>
+                                <input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $itemOlveston_id;?>'></br>
                                 <label class="control-label" for="objectName">Object name:</label>
                                 <input type='text' id="objectName" type='text' name='form_itemName'  value='<?php echo $itemName;?>'></br>
                                 <label for="comment">Object Description:</label>
                                 <textarea class="form-control" rows="5" id="comment" type='text' name='form_itemDescription'><?php echo $itemDescription;?></textarea></br>
                             </div>
                             <div class="col-md-6">
-                                <label class="control-label" for="form_itemImage">Upload an image:</label>
-                                <input type='file' name="form_itemImage" onchange="readURL(this);" />
+                                <label class="control-label" for="form_uploadImage">Upload an image:</label>
+                                <input type='file' name="form_uploadImage" onchange="readURL(this);" />
                                 <img id="blah" src="../images/items/<?php echo $itemImage;?>" alt="../images/items/blank.png" width="250" height="250" />
+								<input name="form_itemImage" type="hidden" value="<?php echo $itemImage;?>">
                             </div>
                             <div class="col-md-12">
                                 <input type='submit' name='editItem' value='Edit Object'>
