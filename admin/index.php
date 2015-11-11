@@ -17,10 +17,10 @@ function debug($value) {
 function createHotspotRecord($x, $y, $item_id, $frame_id, $dbc) {
     //Concat x and y to create co-ords field
     $coords = $x . ", " . $y;
-
     $insertQuery = "INSERT into tbl_hotspot(coords, frame_id, item_id) values ('$coords','$frame_id', '$item_id')";
+    debug($insertQuery);
     //TODO: Check result was successful
-    $result = mysqli_query($dbc, $insertQuery) or die("Couldn't add hotspot to the database: ".mysqli_error($dbc));
+    $result = mysqli_query($dbc, $insertQuery) or die("Couldn't add hotspot to the database: " . mysqli_error($dbc));
 }
 
 function deleteHotspotRecord($hotspot_id, $dbc) {
@@ -36,7 +36,7 @@ function editHotspotRecord($hotspot_id, $x, $y, $item_id, $dbc) {
     $coords = $x . ", " . $y;
 
     $updateQuery = "UPDATE tbl_hotspot SET coords=$coords, item_id = $item_id WHERE hotspot_id = $hotspot_id";
-    $result = mysqli_query($connection, $updateQuery);
+    $result = mysqli_query($dbc, $updateQuery);
 }
 
 ////////////////////////   Form submission   /////////////////////////////
@@ -112,25 +112,37 @@ if (isset($_POST['createHotspot'])) {
                 <div class="tab-content-inner">
                     <div class="hotspotArea">
                         <div id="home" class="tab-pane fade in active">
-                            <div id="pointer_div" onclick="point_it(event)" style = "position: relative; background-image:url('images/room_billiards.png');width:931px;height:400px;">
-                                <img src="images/glassPlusPlus.png" id="cross" style="position:absolute;visibility:hidden;z-index:2;width:40px;height:40px;">
+                            <?php
+                            //Get image based off frame_id
+                            $selectQuery = "SELECT image FROm tbl_frame WHERE frame_id='$frame_id'";
+                            $result = mysqli_query($dbc, $selectQuery) or die("Couldn't get image for this frame: " . mysqli_error($dbc));
+                            $xxx = mysqli_fetch_assoc($result);
+                            $image = $xxx['image'];
+                            ?>
+                            <div id="pointer_div" onclick="point_it(event)" style = "position: relative; background-image:url('../images/rooms/<?php echo $image; ?>');width:931px;height:400px;">
+                                <img src="../images/glassPlusPlus.png" id="cross" style="position:absolute;visibility:hidden;z-index:2;width:40px;height:40px;">
                                 <?php
                                 //draw all the hotspots from the database
                                 //TODO Where frame
+                                echo "<!-- Doing existing hotspots -->\n";
                                 $selectString = "SELECT * FROM tbl_hotspot WHERE frame_id='$frame_id'";
                                 $result = mysqli_query($dbc, $selectString);
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $hotspotID = $row['hotspot_id'];
                                     //Check it is a hotspot and split to x,y
-                                    if (substr_count($row['coords'], ',') == 2) {
+                                    if (substr_count($row['coords'], ", ") == 1) {
+                                        $hotspotID = $row['hotspot_id'];
                                         //Split string based on comma
-                                        $coords = explode($row['coords'], ", ");
+                                        $coords = explode(", ",$row['coords']);
+                                       
                                         $x = $coords[0];
                                         $y = $coords[1];
                                         $item_id = $row['item_id'];
-                                        echo("<input type='image' src='images/glass.png' onclick='selectHotspot(event, $x, $y, $hotspotID, $item_id)' style='position: absolute;width:40px; height:40px; left:$x; top: $y;'/>");
+
+                                        echo("<img src='../images/glass.png' onclick='selectHotspot(event, $x, $y, $hotspotID, $item_id)' style='position: static ;width:40px; height:40px; left:$x; top: $y;'/>\n");
                                     }
                                 }
+
+                                echo "<!-- End existing hotspots -->\n";
 
                                 //input fields required for a new hotspot. x and y are generated. itemID needs to be entered by user.-->
                                 echo("</div>
