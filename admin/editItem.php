@@ -107,7 +107,7 @@ function searchItemRecord($itemID, $connection) {
                                 <label class="control-label" for="form_uploadImage">Upload an image:</label>
                                 <input type='file' name="form_uploadImage" onchange="readURL(this);" />
                                 <img id="blah" src="../images/items/<?php echo $itemImage;?>" alt="../images/items/blank.png" width="250" height="250" />
-								<input name="form_itemImage" type="hidden" value="<?php echo $itemImage;?>">
+								<input id="filename" name="form_itemImage" type="text" value="<?php echo $itemImage;?>">
                             </div>
                             <div class="col-md-12">
                                 <input type='submit' name='editItem' value='Edit Object'>
@@ -149,6 +149,9 @@ function searchItemRecord($itemID, $connection) {
         <script type="text/javascript">
             function readURL(input) {
                 if (input.files && input.files[0]) {
+				var d=document.getElementById('filename');
+				d.value=input.value;
+				
                     var reader = new FileReader();
 
                     reader.onload = function (e) {

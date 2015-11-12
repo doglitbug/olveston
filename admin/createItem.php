@@ -48,7 +48,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                             <div class="col-md-6">
                                 <label class="control-label" for="form_newItemImage">Upload an image:</label>
                                 <input type='file' name="form_newItemImage" onchange="readURL(this);" />
-                                <img id="blah" src="../images/blank.png" alt="../images/blank.png" width="250" height="250" />
+                                <img id="blah" src="../images/items/blank.png" alt="../images/items/blank.png" width="250" height="250" />
                             </div>
                             <div class="col-md-12">
                                 <input type='submit' name='createItem' value='Create Object'>
