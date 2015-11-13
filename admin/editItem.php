@@ -77,7 +77,7 @@ function searchItemRecord($itemID, $connection) {
             </div>
 
             <div class="navBar col-md-12">
-                <img src="images/links.PNG" alt="nav" >
+				<img src="../images/links.PNG" alt="nav" >
             </div>
         </header>
 
@@ -92,30 +92,52 @@ function searchItemRecord($itemID, $connection) {
                 <div class="tab-content tab-content-inner">
                     <fieldset>
                         <form name="pointform" method="post" runat="server">
-                            <div class="col-md-6">
-                                <label class="control-label"  for="objectID">Object ID:</label>
-                                <input type='text' id="objectID" type='text' name='form_itemID' value='<?php echo $itemID;?>'>
-                                <input type='submit' name='searchItem' value='Search for this Object ID'></br>
-								<label class="control-label"  for="olvestonID">Olveston ID:</label>
-                                <input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $itemOlveston_id;?>'></br>
-                                <label class="control-label" for="objectName">Object name:</label>
-                                <input type='text' id="objectName" type='text' name='form_itemName'  value='<?php echo $itemName;?>'></br>
-                                <label for="comment">Object Description:</label>
-                                <textarea class="form-control" rows="5" id="comment" type='text' name='form_itemDescription'><?php echo $itemDescription;?></textarea></br>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="control-label" for="form_uploadImage">Upload an image:</label>
-                                <input type='file' name="form_uploadImage" onchange="readURL(this);" />
-                                <img id="blah" src="../images/items/<?php echo $itemImage;?>" alt="../images/items/blank.png" width="250" height="250" />
-								<input id="filename" name="form_itemImage" type="text" value="<?php echo $itemImage;?>">
-                            </div>
-                            <div class="col-md-12">
-                                <input type='submit' name='editItem' value='Edit Object'>
-                                <input type='submit' name='deleteItem' value='Delete Object'>
-                            </div>
+						<div class="col-lg-6 margTop">
+							<div class="form-group">
+								<div class="col-md-3">
+									<label class="control-label"  for="objectID">Object ID:</label>
+								</div>
+								<input type='text' id="objectID" type='text' name='form_itemID' value='<?php echo $itemID;?>'>
+								<input type='submit' name='searchItem' value='Search'></br>
+							</div>
+					
+					
+							<div class="form-group">
+								<div class="col-md-3">
+								  <label class="control-label"  for="olvestonID">Olveston ID:</label>
+								</div> 
+								<input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $itemOlveston_id;?>'></br>
+							</div>
+		
+			
+							<div class="form-group">
+								<div class="col-md-3">
+								  <label class="control-label" for="objectName">Object name:</label>
+								</div>
+								<input type='text' id="objectName" type='text' name='form_itemName'  value='<?php echo $itemName;?>'></br>
+							</div>
+							<div class="form-group">
+								<div class="col-md-5">
+								  <label for="comment">Object Description:</label>
+								</div>
+								<textarea class="form-control" rows="5" id="comment" type='text' name='form_itelgescription'><?php echo $itelgescription;?></textarea></br>
+							</div>
+						</div>
+						<div class="paddLeft margTop col-lg-6">
+							<div class="form-group"> 
+								<label class="control-label" for="form_uploadImage">Upload an image:</label>
+								<input type='file' name="form_uploadImage" onchange="readURL(this);" />
+								<img id="blah" src="../images/items/<?php echo $itemImage;?>" alt="../images/items/blank.png" width="250" height="250" />
+							</div>  
+						</div>
+						<div class="col-lg-12 topBtnsEditItem">
+							<div class="form-group">
+								<input class="btn btn-primary" type='submit' name='editItem' value='Edit Object'>
+								<input class="btn btn-primary margLeft" type='submit' name='deleteItem' value='Delete Object'>
+							</div>
+						</div>
                         </form>
                     </fieldset>	
-
                 </div>
             </div>
             <div class="anel panel-default table margTop">
