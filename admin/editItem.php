@@ -10,12 +10,16 @@ $itemImage = "blank.png";
 if (isset($_POST['deleteItem'])) {
     $itemID = $_POST['form_itemID'];
     deleteItemRecord($itemID, $connection);
+    //TODO Remove image from database
+    //TODO Confirmation
 } else if (isset($_POST['editItem'])) {
     $EDITitemID = $_POST['form_itemID'];
     $olveston_id = $_POST['form_olvestonID'];
     $name = $_POST['form_itemName'];
     $description = $_POST['form_itemDescription'];
-    $image = $_POST['form_itemImage'];
+    //TODO Check file size
+    //TODO Delete old image?
+    $image = $_FILES['form_uploadImage']['name'];
     editItemRecord($EDITitemID, $olveston_id, $name, $description, $image, $connection);
 } else if (isset($_POST['searchItem'])) {
     $itemID = $_POST['form_itemID'];
@@ -89,7 +93,7 @@ function searchItemRecord($itemID, $connection) {
             <div class="tab-content tab-content-outter">
                 <div class="tab-content tab-content-inner">
                     <fieldset>
-                        <form name="pointform" method="post" runat="server">
+                        <form enctype="mulitpart/form-data" name="pointform" method="post" runat="server">
                             <div class="col-lg-6 margTop">
                                 <div class="form-group">
                                     <div class="col-md-3">
@@ -126,7 +130,7 @@ function searchItemRecord($itemID, $connection) {
                                     <label class="control-label" for="form_uploadImage">Upload an image:</label>
                                     <input type='file' name="form_uploadImage" onchange="readURL(this);" />
                                     <img id="blah" src="../images/items/<?php echo $itemImage; ?>" alt="../images/items/blank.png" width="250" height="250" />
-                                </div>  
+                                </div>
                             </div>
                             <div class="col-lg-12 topBtnsEditItem">
                                 <div class="form-group">
@@ -135,7 +139,7 @@ function searchItemRecord($itemID, $connection) {
                                 </div>
                             </div>
                         </form>
-                    </fieldset>	
+                    </fieldset>
                 </div>
             </div>
             <div class="anel panel-default table margTop">
