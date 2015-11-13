@@ -10,7 +10,6 @@ $itemImage = "blank.png";
 if (isset($_POST['deleteItem'])) {
     $itemID = $_POST['form_itemID'];
     deleteItemRecord($itemID, $connection);
-    //TODO Remove image from database
     //TODO Confirmation
 } else if (isset($_POST['editItem'])) {
     $EDITitemID = $_POST['form_itemID'];
@@ -36,9 +35,19 @@ function createItemRecord($itemName, $olvestonID, $itemDescription, $itemImage, 
 }
 
 function deleteItemRecord($itemID, $connection) {
-    //find the corresponding id for the given hotspot. delete.
+    //Delete any linked hotspots.
+    //The SQL server should take care of this due to cascade anyway.
     $deleteQuery = "DELETE FROM tbl_hotspot WHERE item_id = $itemID";
     $result = mysqli_query($connection, $deleteQuery);
+
+    //Get the item image, so that we can delete it from the server
+    $selectQuery = "SELECT image from tbl_item WHERE item_id=$itemID";
+    $result = mysqli_query($connection, $selectQuery) or die("Couldn't access database to find item: " . mysqli_error($connection));
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        //TODO Check file exists first?
+        unlink("../images/items/" . $row['image']);
+    }
 
     $deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
     $result = mysqli_query($connection, $deleteQuery);
@@ -143,25 +152,25 @@ function searchItemRecord($itemID, $connection) {
                 </div>
             </div>
             <div class="anel panel-default table margTop">
-<?php
-$selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
-$result = mysqli_query($connection, $selectString);
-echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
-?>
+                <?php
+                $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
+                $result = mysqli_query($connection, $selectString);
+                echo("<table class='tableHead table-striped table-bordered table-condensed'>");
+                echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
+                ?>
                 <div class="div-table-content">
                     <table class="table table-striped table-bordered table-condensed">
-<?php
-echo("<tbody>");
-while ($row = mysqli_fetch_assoc($result)) {
-    echo("<tr>");
-    foreach ($row as $index => $value) {
-        echo("<td>$value</td>");
-    }
-    echo("</tr>");
-}
-echo("<tbody></table>");
-?>
+                        <?php
+                        echo("<tbody>");
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo("<tr>");
+                            foreach ($row as $index => $value) {
+                                echo("<td>$value</td>");
+                            }
+                            echo("</tr>");
+                        }
+                        echo("<tbody></table>");
+                        ?>
                 </div>
             </div>
         </div> 
