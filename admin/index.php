@@ -18,7 +18,6 @@ function createHotspotRecord($x, $y, $item_id, $frame_id, $dbc) {
     //Concat x and y to create co-ords field
     $coords = $x . ", " . $y;
     $insertQuery = "INSERT into tbl_hotspot(coords, frame_id, item_id) values ('$coords','$frame_id', '$item_id')";
-    debug($insertQuery);
     //TODO: Check result was successful
     $result = mysqli_query($dbc, $insertQuery) or die("Couldn't add hotspot to the database: " . mysqli_error($dbc));
 }

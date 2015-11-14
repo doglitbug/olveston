@@ -63,7 +63,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                                 <div class="form-group">
                                     <label class="control-label" for="form_newItemImage">Upload an image:</label>
                                     <input type='file' id="form_newItemImage" name="form_newItemImage" onchange="readURL(this);" />
-                                    
+
                                     <img id="blah" src="../images/items/blank.png" alt="../images/items/blank.png" width="250" height="250" />
                                 </div>
                             </div>
@@ -80,23 +80,22 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                         //current tab = 2
                         $itemName = $_POST['form_newItemName'];
                         $itemDescription = $_POST['form_newItemDescription'];
+                        $olveston_id=$_POST['form_olvestonID'];
                         //TODO Check all form data is valid..
-                        
                         //Check file was successful
-                        if ($_FILES['form_newItemImage']['error']==0){
+                        if ($_FILES['form_newItemImage']['error'] == 0) {
                             //TODO Check file size is reasonable...
                             //TODO Check there isn't a file name conflict with an existing image
-                            
                             //Grab file name
                             $itemImage = $_FILES['form_newItemImage']['name'];
-                            
+
                             //Copy file from temporary location to permanant location
                             //Using copy instead of move so that file permission are scrubbed...
-                            copy($_FILES['form_newItemImage']['tmp_name'], "../images/items/".$itemImage);
+                            copy($_FILES['form_newItemImage']['tmp_name'], "../images/items/" . $itemImage);
                         }
 
 
-                        createItemRecord($itemName, $itemDescription, $itemImage, $connection);
+                        createItemRecord($olveston_id, $itemName, $itemDescription, $itemImage, $connection);
                     } else if (isset($_POST['deleteItem'])) {
 
                         $itemID = $_POST['form_itemID'];
@@ -116,8 +115,8 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                         echo("<script> selectItem('$itemID', '$itemName', '$itemDescription', '$itemImage'); </script>");
                     }
 
-                    function createItemRecord($itemName, $itemDescription, $itemImage, $connection) {
-                        $insertQuery = "INSERT into tbl_item(name, description, image) values ('$itemName','$itemDescription', '$itemImage')";
+                    function createItemRecord($olveston_id, $itemName, $itemDescription, $itemImage, $connection) {
+                        $insertQuery = "INSERT into tbl_item(name, description, image, olveston_id) values ('$itemName','$itemDescription', '$itemImage','$olveston_id')";
                         $result = mysqli_query($connection, $insertQuery);
                     }
 
@@ -147,25 +146,25 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                 </div>
             </div>
             <div class="anel panel-default table margTop">
-                <?php
-                $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
-                $result = mysqli_query($connection, $selectString);
-                echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-                echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
-                ?>
+<?php
+$selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
+$result = mysqli_query($connection, $selectString);
+echo("<table class='tableHead table-striped table-bordered table-condensed'>");
+echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
+?>
                 <div class="div-table-content">
                     <table class="table table-striped table-bordered table-condensed">
-                        <?php
-                        echo("<tbody>");
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            echo("<tr>");
-                            foreach ($row as $index => $value) {
-                                echo("<td>$value</td>");
-                            }
-                            echo("</tr>");
-                        }
-                        echo("<tbody></table>");
-                        ?>
+<?php
+echo("<tbody>");
+while ($row = mysqli_fetch_assoc($result)) {
+    echo("<tr>");
+    foreach ($row as $index => $value) {
+        echo("<td>$value</td>");
+    }
+    echo("</tr>");
+}
+echo("<tbody></table>");
+?>
                 </div>
             </div>
         </div> 

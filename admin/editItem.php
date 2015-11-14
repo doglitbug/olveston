@@ -12,15 +12,31 @@ if (isset($_POST['deleteItem'])) {
     deleteItemRecord($itemID, $connection);
     //TODO Confirmation
 } else if (isset($_POST['editItem'])) {
-    $itemID = $_POST['form_itemID'];
+    $item_id = $_POST['form_itemID'];
     $olveston_id = $_POST['form_olvestonID'];
     $name = $_POST['form_itemName'];
     $description = $_POST['form_itemDescription'];
-    //TODO Check file size
-    //TODO Delete old image?
 
-    $image = $_FILES['form_uploadImage']['name'];
-    editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection);
+    //Get existing item image
+    $selectQuery = "SELECT image FROM tbl_item WHERE item_id='$item_id'";
+    $result = mysqli_query($connection, $selectQuery) or die("Couldn't find image filename: " . mysqli_error($connection));
+    $row = mysqli_fetch_assoc($result);
+    $image = $row['image'];
+
+    //Check to see if a new image has been uploaded
+    if ($_FILES['form_uploadImage']['error'] == 0) {
+        //TODO Remove old image
+        
+        //Upload and move new image
+        $image = $_FILES['form_uploadImage']['name'];
+
+        //Copy file from temporary location to permanant location
+        //Using copy instead of move so that file permission are scrubbed...
+        //TODO CHeck file doesn't already exist?
+        copy($_FILES['form_uploadImage']['tmp_name'], "../images/items/" . $image);
+    }
+
+    editItemRecord($item_id, $olveston_id, $name, $description, $image, $connection);
 } else if (isset($_POST['searchItem'])) {
     $itemID = $_POST['form_itemID'];
     $test = searchItemRecord($itemID, $connection);
@@ -57,7 +73,7 @@ function deleteItemRecord($itemID, $connection) {
 function editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection) {
     //find the corresponding id for the given hotspot. delete.
     $updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olveston_id', description = '$description', image = '$image' WHERE item_id = $itemID";
-    $result = mysqli_query($connection, $updateQuery) or die("Couldn't edit item: ".mysqli_error($dbc));
+    $result = mysqli_query($connection, $updateQuery) or die("Couldn't edit item: " . mysqli_error($dbc));
 }
 
 function searchItemRecord($itemID, $connection) {
@@ -103,7 +119,7 @@ function searchItemRecord($itemID, $connection) {
             <div class="tab-content tab-content-outter">
                 <div class="tab-content tab-content-inner">
                     <fieldset>
-                        <form enctype="mulitpart/form-data" name="pointform" method="post" runat="server">
+                        <form enctype="multipart/form-data" name="pointform" method="post" runat="server">
                             <div class="col-lg-6 margTop">
                                 <div class="form-group">
                                     <div class="col-md-3">
@@ -138,7 +154,7 @@ function searchItemRecord($itemID, $connection) {
                             <div class="paddLeft margTop col-lg-6">
                                 <div class="form-group"> 
                                     <label class="control-label" for="form_uploadImage">Upload an image:</label>
-                                    <input type='file' name="form_uploadImage" onchange="readURL(this);" />
+                                    <input type='file' id="form_uploadImage" name="form_uploadImage" onchange="readURL(this);" />
                                     <img id="blah" src="../images/items/<?php echo $itemImage; ?>" alt="../images/items/blank.png" width="250" height="250" />
                                 </div>
                             </div>
