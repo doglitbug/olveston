@@ -21,22 +21,24 @@ if (isset($_POST['deleteItem'])) {
     $selectQuery = "SELECT image FROM tbl_item WHERE item_id='$item_id'";
     $result = mysqli_query($connection, $selectQuery) or die("Couldn't find image filename: " . mysqli_error($connection));
     $row = mysqli_fetch_assoc($result);
-    $image = $row['image'];
+    $newImage=$image = $row['image'];
 
     //Check to see if a new image has been uploaded
     if ($_FILES['form_uploadImage']['error'] == 0) {
-        //TODO Remove old image
-        
         //Upload and move new image
-        $image = $_FILES['form_uploadImage']['name'];
+        $newImage = $_FILES['form_uploadImage']['name'];
 
         //Copy file from temporary location to permanant location
         //Using copy instead of move so that file permission are scrubbed...
-        //TODO CHeck file doesn't already exist?
-        copy($_FILES['form_uploadImage']['tmp_name'], "../images/items/" . $image);
+        //TODO Check file doesn't already exist, or let overwrite?
+        copy($_FILES['form_uploadImage']['tmp_name'], "../images/items/" . $newImage);
     }
 
-    editItemRecord($item_id, $olveston_id, $name, $description, $image, $connection);
+    editItemRecord($item_id, $olveston_id, $name, $description, $newImage, $connection);
+    //If the image has changed, delete the old one
+    if($newImage!=$image){
+        deleteImage($connection,$image);
+    }
 } else if (isset($_POST['searchItem'])) {
     $itemID = $_POST['form_itemID'];
     $test = searchItemRecord($itemID, $connection);
@@ -44,6 +46,18 @@ if (isset($_POST['deleteItem'])) {
     $itemName = $test['name'];
     $itemDescription = $test['description'];
     $itemImage = $test['image'];
+}
+
+function deleteImage($dbc, $imageName) {
+    //Delete an image only if no items are using it. This ideally should never happen as all items should have unique images
+    $selectQuery = "SELECT * from tbl_item WHERE image='$imageName'";
+    $result = mysqli_query($dbc, $selectQuery) or die("Couldn't search database for image: " . mysqli_error($dbc));
+    print_r($imageName);
+    print_r($result);
+    //Check its unused
+    if (mysqli_num_rows($result) == 0) {
+        unlink("../images/items/" . $imageName);
+    }
 }
 
 function createItemRecord($itemName, $olvestonID, $itemDescription, $itemImage, $connection) {
@@ -57,23 +71,24 @@ function deleteItemRecord($itemID, $connection) {
     $deleteQuery = "DELETE FROM tbl_hotspot WHERE item_id = $itemID";
     $result = mysqli_query($connection, $deleteQuery);
 
-    //Get the item image, so that we can delete it from the server
+    //Get the item image, so that we can delete it from the server if need be
     $selectQuery = "SELECT image from tbl_item WHERE item_id=$itemID";
     $result = mysqli_query($connection, $selectQuery) or die("Couldn't access database to find item: " . mysqli_error($connection));
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
-        //TODO Check file exists first?
-        unlink("../images/items/" . $row['image']);
+        $image=$row['image'];
     }
 
     $deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
     $result = mysqli_query($connection, $deleteQuery);
+    //Flick off to deleteImage to check it can be removed
+    deleteImage($connection,$image);
 }
 
 function editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection) {
     //find the corresponding id for the given hotspot. delete.
     $updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olveston_id', description = '$description', image = '$image' WHERE item_id = $itemID";
-    $result = mysqli_query($connection, $updateQuery) or die("Couldn't edit item: " . mysqli_error($dbc));
+    $result = mysqli_query($connection, $updateQuery) or die("Couldn't edit item: " . mysqli_error($connection));
 }
 
 function searchItemRecord($itemID, $connection) {
