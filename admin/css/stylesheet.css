@@ -16,10 +16,30 @@ h3{
 	margin-top:0px;
     color: #fff;
 }
-
+.col-md-6 {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
 .col-md-12{
     padding-left: 0px;
     padding-right: 0px;
+}
+.topBtnsEditItem{
+	text-align: center;
+	padding-bottom: 10px ;
+}
+.paddLeft{
+	padding-left: 10%;
+}
+.margBot{
+	margin-bottom: 5%;
+}
+.margLeft{
+	margin-left: 5%;
+}
+.margTop{
+	margin-top:5%;
 }
 .headerBack {
     margin:0;

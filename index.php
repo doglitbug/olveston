@@ -33,34 +33,30 @@ require_once("scripts/hotspots.php");
     <span class="black-arrow right gallery-right" onClick="nextFrame()"></span>
 
 </div><!-- /content -->
-
-<div class=tabOuter>
-    <div class=tabs>
-        <div id=tab1> <a href="#tab1">Sections</a>
-            <div id="outer">
-                <div class="wrap">
-                    <ul>
-                        <?php
-                        getFrames($dbc);
-                        ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div id=tab2> <a href="#tab2">Rooms</a>
-            <div id="outer">
-                <div class="wrap">
-                    <ul>
-                        <?php
-                        getRooms($dbc);
-                        ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="container">
+		<div class="divsize">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="index.php">Room sections</a></li>
+                <li role="presentation"><a href="room.php">Rooms</a></li>
+            </ul>
+			
+			<div class=" tab-content tab-content-outter divsize">
+                <div class="tab-content tab-content-inner border">
+					<div class="col-lg-12 margTop">
+						<div id="outer">
+							<div class="wrap">
+								<ul>
+									<?php
+									getFrames($dbc);
+									?>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	 
+		</div>	
 </div>
-
 
 
 <!-- used for dimming the background -->

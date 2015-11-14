@@ -15,7 +15,7 @@ html, body {
 body {
     position: relative; /*Needed for pop up*/
 }
-ul{list-style:none;padding:5px;}
+ul{list-style:none;padding:0px;}
 
 #header {
     margin:0;
@@ -50,18 +50,26 @@ ul{list-style:none;padding:5px;}
     text-align: center;
 }
 .navBar{
-    background: url("../images/links.PNG");
-    background-repeat: no-repeat;
-    background-position: center; 
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 170px;
+    padding-top: 100px;
     position: absolute;
-    height: 113px;
     z-index:1;
     top: 0px;
     right: 0px;
     left: 0px;
+    color: #fff;
+    overflow: hidden;
+    font-size: 50px;
+    text-align: center;
+}
+.headerBack {
+    margin:0;
+    position: absolute;
+    top: 0px;
+	padding-top: 20px;
+    right: 0px;
+    left: 0px;
+    height: 113px;
+    background: #050000 url("../images/teeth-050000-ffffff.png") repeat-x scroll 50% 100%;
     color: #fff;
     overflow: hidden;
     font-size: 50px;
@@ -130,15 +138,130 @@ div.tabs > div:target > div, :target #default2 > div {
 
 div.tabs :target {
     outline: none}
+		
+.nav {
+    padding-left: 0;
+    list-style: none;
+}
+a {
+    color: #000;
+    text-decoration: none;
+}
 
+.nav-tabs {
+	margin-top:10px;
+    border-bottom: 1px solid #000;
+}
+
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: none;
+  background-color: #eee;
+}
+
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+  background-color: #000;
+  border-color: #337ab7;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #000;
+  
+}
+.nav-tabs > li {
+  float: left;
+  margin-bottom: -1px;
+ 
+}
+.nav-tabs > li > a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid #000;
+  border-radius: 4px 4px 0 0;
+  background-color: #fff;
+}
+.nav-tabs > li > a:hover {
+  border-color: #000 #000 #000;
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-bottom-color: transparent;
+}
+.nav-tabs.nav-justified {
+  width: 100%;
+  border-bottom: 0;
+}
+.nav-tabs.nav-justified > li {
+  float: none;
+}
+.nav-tabs.nav-justified > li > a {
+  margin-bottom: 5px;
+  text-align: center;
+}
+.nav-tabs.nav-justified > .dropdown .dropdown-menu {
+  top: auto;
+  left: auto;
+}
+@media (min-width: 768px) {
+  .nav-tabs.nav-justified > li {
+    display: table-cell;
+    width: 1%;
+  }
+  .nav-tabs.nav-justified > li > a {
+    margin-bottom: 0;
+  }
+}
+.nav-tabs.nav-justified > li > a {
+  margin-right: 0;
+  border-radius: 4px;
+}
+.nav-tabs.nav-justified > .active > a,
+.nav-tabs.nav-justified > .active > a:hover,
+.nav-tabs.nav-justified > .active > a:focus {
+  border: 1px solid #ddd;
+}
+@media (min-width: 768px) {
+  .nav-tabs.nav-justified > li > a {
+    border-bottom: 1px solid #ddd;
+    border-radius: 4px 4px 0 0;
+  }
+  .nav-tabs.nav-justified > .active > a,
+  .nav-tabs.nav-justified > .active > a:hover,
+  .nav-tabs.nav-justified > .active > a:focus {
+    border-bottom-color: #fff;
+  }
+}
+.tab-content-inner{
+	padding: 20px 0 0 20px;
+}
+
+.tab-content-outter{
+	margin-top: 0px;
+	padding-bottom:20px;
+	min-height: 200px;
+	border-bottom: solid 1px #000;
+	border-left: solid 1px #000;
+	border-right: solid 1px #000;
+}
+
+.tab-content-inner{
+	padding: 20px 0 0 20px;
+}
 /*gallery*/
 #outer{
-    width:700px;
+    max-width:100%;
     margin:auto;
 }
 .wrap {
 
-    /*width: 520px;*/
+    max-width: 100%;
     overflow: auto;
     white-space:nowrap;
 }
@@ -233,6 +356,12 @@ div.tabs :target {
     z-index: 100;
 }
 
+.divsize{    
+	width: 940px;
+	margin: 0 auto;
+	padding-bottom:20px;
+}
+
 .itemImg {
     max-width: 150px;
     width: 100%;
@@ -244,7 +373,7 @@ div.tabs :target {
 }
 
 .thumb {
-    max-width: 150px;
+    max-width: 300px;
     width: 100%;
     height: auto;
 }

@@ -24,7 +24,7 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
             </div>
 
             <div class="navBar col-md-12">
-                <img src="images/links.PNG" alt="nav" >
+                <img src="../images/links.PNG" alt="nav" >
             </div>
         </header>
 
@@ -38,23 +38,42 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
             <div class="tab-content tab-content-outter">
                 <div class="tab-content tab-content-inner">
                     <fieldset>
-                        <form name="pointform" method="post">
-                            <div class="col-md-6">
-                                <label class="control-label"  for="objectName">Object name:</label>
-                                <input type="text" id="objectName" type='text' name='form_newItemName' placeholder="" class="input-xlarge input-mysize"></br>
-                                <label for="comment">Object Description:</label>
-                                <textarea class="form-control" rows="5" id="comment" type='text' name='form_newItemDescription'></textarea></br>
-                            </div>	
-                            <div class="col-md-6">
-                                <label class="control-label" for="form_newItemImage">Upload an image:</label>
+                        <form name="pointform" method="post" runat="server">
+						<div class="col-lg-6 margTop">
+							<div class="form-group">
+								<div class="col-md-3">
+								  <label class="control-label"  for="olvestonID">Olveston ID:</label>
+								</div> 
+								<input type='text' id="olvestonID" type='text' name='form_olvestonID'></br>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3">
+									<label class="control-label"  for="objectName">Object name:</label>
+								</div>
+								<input type="text" id="objectName" type='text' name='form_newItemName' placeholder="" class="input-xlarge input-mysize"></br>
+							</div>
+							<div class="form-group">
+								<div class="col-md-3">
+									<label for="comment">Object Description:</label>
+								</div>
+								<textarea class="form-control" rows="5" id="comment" type='text' name='form_newItemDescription'></textarea></br>
+							</div>
+						</div>
+						<div class="paddLeft margTop col-lg-6">
+							<div class="form-group">
+								<label class="control-label" for="form_newItemImage">Upload an image:</label>
                                 <input type='file' name="form_newItemImage" onchange="readURL(this);" />
                                 <img id="blah" src="../images/items/blank.png" alt="../images/items/blank.png" width="250" height="250" />
-                            </div>
-                            <div class="col-md-12">
-                                <input type='submit' name='createItem' value='Create Object'>
-                            </div>
+							</div>  
+						</div>
+						<div class="col-lg-12 topBtnsEditItem">
+							<div class="form-group">
+								<input class="btn btn-primary" type='submit' name='createItem' value='Create Object'>
+							</div>
+						</div>    
                         </form>
                     </fieldset>
+				
                     <?php
                     //if the create an item button has been pushed, take form inputs, create new item record
                     if (isset($_POST['createItem'])) {

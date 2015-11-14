@@ -118,13 +118,20 @@ function showInfo($dbc, $item_id) {
     <head>
         <meta charset = "utf-8" />
         <title>Olveston Historic Home</title>
-        <link type = "text/css" rel = "stylesheet" href = "scripts/stylesheet.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+		<link type = "text/css" rel = "stylesheet" href = "scripts/stylesheet.css" />
         <script type="text/javascript" src="scripts/getItem.js"></script>
         <?php generateLeftRight($nextFrame[0], $prevFrame[0]); ?>
     </head>
     <body>
-        <div id="header"></div>
-		<div class="headCont"></div>
-		<div class="navBar"></div>
-		
-        <div id="page">
+        <header>
+            <div class="headerBack col-md-12">
+                <div class="headCont col-md-12">
+                </div>
+            </div>
+
+            <div class="navBar col-md-12">
+				<img src="images/links.PNG" alt="nav" >
+            </div>
+        </header>

@@ -110,16 +110,18 @@ if (isset($_POST['createHotspot'])) {
 
             <div class="tab-content-outter">
                 <div class="tab-content-inner">
-                    <div class="hotspotArea">
-                        <div id="home" class="tab-pane fade in active">
-                            <?php
-                            //Get image based off frame_id
-                            $selectQuery = "SELECT image FROm tbl_frame WHERE frame_id='$frame_id'";
-                            $result = mysqli_query($dbc, $selectQuery) or die("Couldn't get image for this frame: " . mysqli_error($dbc));
-                            $xxx = mysqli_fetch_assoc($result);
-                            $image = $xxx['image'];
-                            ?>
-                            <div id="pointer_div" onclick="point_it(event)" style = "position: relative; background-image:url('../images/rooms/<?php echo $image; ?>');width:931px;height:400px;">
+					<div id="home" class="tab-pane fade in active">
+						<?php
+						//Get image based off frame_id
+						$selectQuery = "SELECT image FROm tbl_frame WHERE frame_id='$frame_id'";
+						$result = mysqli_query($dbc, $selectQuery) or die("Couldn't get image for this frame: " . mysqli_error($dbc));
+						$xxx = mysqli_fetch_assoc($result);
+						$image = $xxx['image'];
+						?>
+						<fieldset>
+						<form name="pointform" method="post" runat="server">
+						<div class="hotspotArea">	
+                            <div class="col-lg-12 margBot margTop" id="pointer_div" onclick="point_it(event)" style = "position: relative; background-image:url('../images/rooms/<?php echo $image; ?>');width:931px;height:400px;">
                                 <img src="../images/glassPlusPlus.png" id="cross" style="position:absolute;visibility:hidden;z-index:2;width:40px;height:40px;">
                                 <?php
                                 //draw all the hotspots from the database
@@ -133,80 +135,90 @@ if (isset($_POST['createHotspot'])) {
                                         $hotspotID = $row['hotspot_id'];
                                         //Split string based on comma
                                         $coords = explode(", ", $row['coords']);
-
                                         $x = $coords[0];
                                         $y = $coords[1];
                                         $item_id = $row['item_id'];
-
                                         echo "<div style='width:40px; height:40px; position: absolute; top: {$y}px; left:{$x}px;'>\n";
-
-                                        echo("<img src='../images/glass.png' width='40px' height='40px' onclick='selectHotspot(event, $x, $y, $hotspotID, $item_id)' />\n");
-                                        
+                                        echo("<img src='../images/glass.png' width='40px' height='40px' onclick='selectHotspot(event, $x, $y, $hotspotID, $item_id)' />\n");                        
                                         echo "</div>\n";
                                     }
                                 }
-
                                 echo "<!-- End existing hotspots -->\n";
+								?>
+							</div>
+						</div>
+						<div class="col-lg-5 margLeft">
+							<div class="form-group">
+								<div class="col-md-3">
+									<label for="itemNum">Item ID number: </label>
+								</div>
+								<input id="itemNum" type='text' name='form_itemID' value=''></br>
+							</div> 
+						</div>	
+						<div class="col-lg-5 margLeft">
+							<label class="margLeft"for="theX">You pointed on</label>
+							<div class="form-group ">
+								<input type='hidden' name='form_hotspotID'>
+								<div class="col-md-2">
+									<label for="theX">x = </label>
+									<label for="theY">y = </label>
+								</div>  
+								<div class="col-md-2">
+									<input id="theX" type='text' name='form_x' size='4' />
+									<input id="theY" type='text' name='form_y' size='4' /></br>
+								</div>
+								
+							</div>
+						</div>
+						<div class="col-lg-12 topBtnsEditItem margTop">
+							<div class="form-group">
+								<input class="btn btn-primary" type='submit' name='createHotspot' value='Create hotspot'>
+								<input class="btn btn-primary margLeft" type='submit' name='editHotspot' value='Edit hotspot'>
+								<input class="btn btn-primary margLeft" type='submit' name='deleteHotspot' value='Delete hotspot'>
+							</div>
+						</div>   
+						</form>
+						</fieldset>			   
+					</div>
+				</div>
+			</div>
+			<div class="anel panel-default table margTop">
+				<?php
+				$selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
+				$result = mysqli_query($dbc, $selectString);
+				echo("<table class='tableHead table-striped table-bordered table-condensed'>");
+				echo("<thead><tr><th>item ID</th><th>olveston ID</th><th>item name</th><th>item description</th><th>image</th></tr></thead></table>");
+				?>
+				<div class="div-table-content">
+					<table class="table table-striped table-bordered table-condensed">
+						<?php
+						echo("<tbody>");
+						while ($row = mysqli_fetch_assoc($result)) {
+							echo("<tr>");
+							foreach ($row as $index => $value) {
+								echo("<td>$value</td>");
+							}
+							echo("</tr>");
+						}
+						echo("<tbody></table>");
+						?>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="footInfo">
+			</div>
+		</div>
+		<script language="JavaScript">
+			function selectItem($itemID, $itemName, $itemDescription, $itemImage) {
+				document.pointform.form_itemID.value = $itemID;
+				document.pointform.form_itemName.value = $itemName;
+				document.pointform.form_itemDescription.value = $itemDescription;
+				document.pointform.form_itemImage.value = $itemImage;
+			}
+		</script>
 
-                                //input fields required for a new hotspot. x and y are generated. itemID needs to be entered by user.-->
-                                echo("</div>
-                                    <fieldset>
-                                    <form name='pointform' method='post'>
-                                            <div class='marg col-md-5'>
-                                                    <input type='hidden' name='form_hotspotID'>
-                                                    </br>You pointed on x = <input type='text' name='form_x' size='4' /> - y = <input type='text' name='form_y' size='4' /></br>
-                                                    </br>Item ID number:<input type='text' name='form_itemID' value=''></br>
-                                            </div>
-                                            <div class='marg col-md-5'>
-                                                    </br>
-                                                    <input type='submit' name='createHotspot' value='Create hotspot'>
-                                                    <input type='submit' name='editHotspot' value='Edit hotspot'>
-                                                    <input type='submit' name='deleteHotspot' value='Delete hotspot'>
-                                            </div>
-                                    </form> 	
-                                    </fieldset>");
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="anel panel-default table margTop">
-                    <?php
-                    $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
-                    $result = mysqli_query($dbc, $selectString);
-                    echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-                    echo("<thead><tr><th>item ID</th><th>olveston ID</th><th>item name</th><th>item description</th><th>image</th></tr></thead></table>");
-                    ?>
-                    <div class="div-table-content">
-                        <table class="table table-striped table-bordered table-condensed">
-                            <?php
-                            echo("<tbody>");
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo("<tr>");
-                                foreach ($row as $index => $value) {
-                                    echo("<td>$value</td>");
-                                }
-                                echo("</tr>");
-                            }
-                            echo("<tbody></table>");
-                            ?>
-                    </div>
-                </div>
-            </div>
-            <div id="footer">
-                <div class="footInfo">
-                </div>
-            </div>
-            <script language="JavaScript">
-                function selectItem($itemID, $itemName, $itemDescription, $itemImage) {
-                    document.pointform.form_itemID.value = $itemID;
-                    document.pointform.form_itemName.value = $itemName;
-                    document.pointform.form_itemDescription.value = $itemDescription;
-                    document.pointform.form_itemImage.value = $itemImage;
-                }
-            </script>
-
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </body>
 </html>
