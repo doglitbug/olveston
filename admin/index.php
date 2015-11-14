@@ -35,8 +35,8 @@ function editHotspotRecord($hotspot_id, $x, $y, $item_id, $dbc) {
     //Concat x and y to create co-ords field
     $coords = $x . ", " . $y;
 
-    $updateQuery = "UPDATE tbl_hotspot SET coords=$coords, item_id = $item_id WHERE hotspot_id = $hotspot_id";
-    $result = mysqli_query($dbc, $updateQuery);
+    $updateQuery = "UPDATE tbl_hotspot SET coords='$coords', item_id = $item_id WHERE hotspot_id = $hotspot_id";
+    $result = mysqli_query($dbc, $updateQuery) or die("Couldn't update hotspot: ".mysqli_error($dbc));
 }
 
 ////////////////////////   Form submission   /////////////////////////////
