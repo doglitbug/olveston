@@ -12,14 +12,15 @@ if (isset($_POST['deleteItem'])) {
     deleteItemRecord($itemID, $connection);
     //TODO Confirmation
 } else if (isset($_POST['editItem'])) {
-    $EDITitemID = $_POST['form_itemID'];
+    $itemID = $_POST['form_itemID'];
     $olveston_id = $_POST['form_olvestonID'];
     $name = $_POST['form_itemName'];
     $description = $_POST['form_itemDescription'];
     //TODO Check file size
     //TODO Delete old image?
+
     $image = $_FILES['form_uploadImage']['name'];
-    editItemRecord($EDITitemID, $olveston_id, $name, $description, $image, $connection);
+    editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection);
 } else if (isset($_POST['searchItem'])) {
     $itemID = $_POST['form_itemID'];
     $test = searchItemRecord($itemID, $connection);
@@ -56,7 +57,7 @@ function deleteItemRecord($itemID, $connection) {
 function editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection) {
     //find the corresponding id for the given hotspot. delete.
     $updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olveston_id', description = '$description', image = '$image' WHERE item_id = $itemID";
-    $result = mysqli_query($connection, $updateQuery);
+    $result = mysqli_query($connection, $updateQuery) or die("Couldn't edit item: ".mysqli_error($dbc));
 }
 
 function searchItemRecord($itemID, $connection) {
@@ -131,7 +132,7 @@ function searchItemRecord($itemID, $connection) {
                                     <div class="col-md-5">
                                         <label for="comment">Object Description:</label>
                                     </div>
-                                    <textarea class="form-control" rows="5" id="comment" type='text' name='form_itelgescription'><?php echo $itemDescription; ?></textarea></br>
+                                    <textarea class="form-control" rows="5" id="comment" type='text' name='form_itemDescription'><?php echo $itemDescription; ?></textarea></br>
                                 </div>
                             </div>
                             <div class="paddLeft margTop col-lg-6">
