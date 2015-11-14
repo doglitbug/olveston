@@ -4,56 +4,67 @@ require_once("../scripts/connectvars.php");
 $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Could not connect to database");
 
 //Set up variables for sticky form(used in search)
-$itemID=$itemName=$itemDescription=$itemOlveston_id="";
-$itemImage="blank.png";
+$itemID = $itemName = $itemDescription = $itemOlveston_id = "";
+$itemImage = "blank.png";
 
 if (isset($_POST['deleteItem'])) {
-	$itemID = $_POST['form_itemID'];
-	deleteItemRecord($itemID, $connection);
-	
+    $itemID = $_POST['form_itemID'];
+    deleteItemRecord($itemID, $connection);
+    //TODO Confirmation
 } else if (isset($_POST['editItem'])) {
-	$EDITitemID = $_POST['form_itemID'];
-	$olveston_id = $_POST['form_olvestonID'];
-	$name = $_POST['form_itemName'];
-	$description = $_POST['form_itemDescription'];
-	$image = $_POST['form_itemImage'];
-	editItemRecord($EDITitemID, $olveston_id, $name, $description, $image, $connection);
-	
+    $EDITitemID = $_POST['form_itemID'];
+    $olveston_id = $_POST['form_olvestonID'];
+    $name = $_POST['form_itemName'];
+    $description = $_POST['form_itemDescription'];
+    //TODO Check file size
+    //TODO Delete old image?
+    $image = $_FILES['form_uploadImage']['name'];
+    editItemRecord($EDITitemID, $olveston_id, $name, $description, $image, $connection);
 } else if (isset($_POST['searchItem'])) {
-	$itemID = $_POST['form_itemID'];
-	$test = searchItemRecord($itemID, $connection);
-	$itemOlveston_id = $test['olveston_id'];
-	$itemName = $test['name'];
-	$itemDescription = $test['description'];
-	$itemImage = $test['image'];
+    $itemID = $_POST['form_itemID'];
+    $test = searchItemRecord($itemID, $connection);
+    $itemOlveston_id = $test['olveston_id'];
+    $itemName = $test['name'];
+    $itemDescription = $test['description'];
+    $itemImage = $test['image'];
 }
 
 function createItemRecord($itemName, $olvestonID, $itemDescription, $itemImage, $connection) {
-	$insertQuery = "INSERT into tbl_item(name, olveston_id, description, image) values ('$itemName', '$olvestonID', '$itemDescription', '$itemImage')";
-	$result = mysqli_query($connection, $insertQuery);
+    $insertQuery = "INSERT into tbl_item(name, olveston_id, description, image) values ('$itemName', '$olvestonID', '$itemDescription', '$itemImage')";
+    $result = mysqli_query($connection, $insertQuery);
 }
 
 function deleteItemRecord($itemID, $connection) {
-	//find the corresponding id for the given hotspot. delete.
-	$deleteQuery = "DELETE FROM tbl_hotspot WHERE item_id = $itemID";
-	$result = mysqli_query($connection, $deleteQuery);
+    //Delete any linked hotspots.
+    //The SQL server should take care of this due to cascade anyway.
+    $deleteQuery = "DELETE FROM tbl_hotspot WHERE item_id = $itemID";
+    $result = mysqli_query($connection, $deleteQuery);
 
-	$deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
-	$result = mysqli_query($connection, $deleteQuery);
+    //Get the item image, so that we can delete it from the server
+    $selectQuery = "SELECT image from tbl_item WHERE item_id=$itemID";
+    $result = mysqli_query($connection, $selectQuery) or die("Couldn't access database to find item: " . mysqli_error($connection));
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        //TODO Check file exists first?
+        unlink("../images/items/" . $row['image']);
+    }
+
+    $deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
+    $result = mysqli_query($connection, $deleteQuery);
 }
 
 function editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection) {
-	//find the corresponding id for the given hotspot. delete.
-	$updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olveston_id', description = '$description', image = '$image' WHERE item_id = $itemID";
-	$result = mysqli_query($connection, $updateQuery);
+    //find the corresponding id for the given hotspot. delete.
+    $updateQuery = "UPDATE tbl_item SET name = '$name', olveston_id = '$olveston_id', description = '$description', image = '$image' WHERE item_id = $itemID";
+    $result = mysqli_query($connection, $updateQuery);
 }
 
 function searchItemRecord($itemID, $connection) {
-	$selectString = "SELECT * from tbl_item WHERE item_id = $itemID";
-	$result = mysqli_query($connection, $selectString);
-	$row = mysqli_fetch_assoc($result);
-	return $row;
-	//return the row with the given itemID
+    $selectString = "SELECT * from tbl_item WHERE item_id = $itemID";
+    $result = mysqli_query($connection, $selectString);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
+    //return the row with the given itemID
 }
 ?>
 
@@ -77,7 +88,11 @@ function searchItemRecord($itemID, $connection) {
             </div>
 
             <div class="navBar col-md-12">
+<<<<<<< HEAD
 				<img src="../images/links.PNG" alt="nav" >
+=======
+                <img src="../images/links.PNG" alt="nav" >
+>>>>>>> 7bcf19812f1aa6ef626ab2a7df801d3d669e7958
             </div>
         </header>
 
@@ -91,75 +106,75 @@ function searchItemRecord($itemID, $connection) {
             <div class="tab-content tab-content-outter">
                 <div class="tab-content tab-content-inner">
                     <fieldset>
-                        <form name="pointform" method="post" runat="server">
-						<div class="col-lg-6 margTop">
-							<div class="form-group">
-								<div class="col-md-3">
-									<label class="control-label"  for="objectID">Object ID:</label>
-								</div>
-								<input type='text' id="objectID" type='text' name='form_itemID' value='<?php echo $itemID;?>'>
-								<input type='submit' name='searchItem' value='Search'></br>
-							</div>
-					
-					
-							<div class="form-group">
-								<div class="col-md-3">
-								  <label class="control-label"  for="olvestonID">Olveston ID:</label>
-								</div> 
-								<input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $itemOlveston_id;?>'></br>
-							</div>
-		
-			
-							<div class="form-group">
-								<div class="col-md-3">
-								  <label class="control-label" for="objectName">Object name:</label>
-								</div>
-								<input type='text' id="objectName" type='text' name='form_itemName'  value='<?php echo $itemName;?>'></br>
-							</div>
-							<div class="form-group">
-								<div class="col-md-5">
-								  <label for="comment">Object Description:</label>
-								</div>
-								<textarea class="form-control" rows="5" id="comment" type='text' name='form_itelgescription'><?php echo $itelgescription;?></textarea></br>
-							</div>
-						</div>
-						<div class="paddLeft margTop col-lg-6">
-							<div class="form-group"> 
-								<label class="control-label" for="form_uploadImage">Upload an image:</label>
-								<input type='file' name="form_uploadImage" onchange="readURL(this);" />
-								<img id="blah" src="../images/items/<?php echo $itemImage;?>" alt="../images/items/blank.png" width="250" height="250" />
-							</div>  
-						</div>
-						<div class="col-lg-12 topBtnsEditItem">
-							<div class="form-group">
-								<input class="btn btn-primary" type='submit' name='editItem' value='Edit Object'>
-								<input class="btn btn-primary margLeft" type='submit' name='deleteItem' value='Delete Object'>
-							</div>
-						</div>
+                        <form enctype="mulitpart/form-data" name="pointform" method="post" runat="server">
+                            <div class="col-lg-6 margTop">
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label class="control-label"  for="objectID">Object ID:</label>
+                                    </div>
+                                    <input type='text' id="objectID" type='text' name='form_itemID' value='<?php echo $itemID; ?>'>
+                                    <input type='submit' name='searchItem' value='Search'></br>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label class="control-label"  for="olvestonID">Olveston ID:</label>
+                                    </div> 
+                                    <input type='text' id="olvestonID" type='text' name='form_olvestonID' value='<?php echo $itemOlveston_id; ?>'></br>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <label class="control-label" for="objectName">Object name:</label>
+                                    </div>
+                                    <input type='text' id="objectName" type='text' name='form_itemName'  value='<?php echo $itemName; ?>'></br>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <label for="comment">Object Description:</label>
+                                    </div>
+                                    <textarea class="form-control" rows="5" id="comment" type='text' name='form_itelgescription'><?php echo $itemDescription; ?></textarea></br>
+                                </div>
+                            </div>
+                            <div class="paddLeft margTop col-lg-6">
+                                <div class="form-group"> 
+                                    <label class="control-label" for="form_uploadImage">Upload an image:</label>
+                                    <input type='file' name="form_uploadImage" onchange="readURL(this);" />
+                                    <img id="blah" src="../images/items/<?php echo $itemImage; ?>" alt="../images/items/blank.png" width="250" height="250" />
+                                </div>
+                            </div>
+                            <div class="col-lg-12 topBtnsEditItem">
+                                <div class="form-group">
+                                    <input class="btn btn-primary" type='submit' name='editItem' value='Edit Object'>
+                                    <input class="btn btn-primary margLeft" type='submit' name='deleteItem' value='Delete Object'>
+                                </div>
+                            </div>
                         </form>
-                    </fieldset>	
+                    </fieldset>
                 </div>
             </div>
             <div class="anel panel-default table margTop">
-                    <?php
-                    $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
-                    $result = mysqli_query($connection, $selectString);
-                    echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-                    echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
-                    ?>
+                <?php
+                $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
+                $result = mysqli_query($connection, $selectString);
+                echo("<table class='tableHead table-striped table-bordered table-condensed'>");
+                echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
+                ?>
                 <div class="div-table-content">
                     <table class="table table-striped table-bordered table-condensed">
-                    <?php
-                    echo("<tbody>");
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo("<tr>");
-                        foreach ($row as $index => $value) {
-                            echo("<td>$value</td>");
+                        <?php
+                        echo("<tbody>");
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo("<tr>");
+                            foreach ($row as $index => $value) {
+                                echo("<td>$value</td>");
+                            }
+                            echo("</tr>");
                         }
-                        echo("</tr>");
-                    }
-                    echo("<tbody></table>");
-                    ?>
+                        echo("<tbody></table>");
+                        ?>
                 </div>
             </div>
         </div> 
@@ -171,9 +186,9 @@ function searchItemRecord($itemID, $connection) {
         <script type="text/javascript">
             function readURL(input) {
                 if (input.files && input.files[0]) {
-				var d=document.getElementById('filename');
-				d.value=input.value;
-				
+                    var d = document.getElementById('filename');
+                    d.value = input.value;
+
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
