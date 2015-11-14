@@ -88,11 +88,7 @@ function searchItemRecord($itemID, $connection) {
             </div>
 
             <div class="navBar col-md-12">
-<<<<<<< HEAD
-				<img src="../images/links.PNG" alt="nav" >
-=======
                 <img src="../images/links.PNG" alt="nav" >
->>>>>>> 7bcf19812f1aa6ef626ab2a7df801d3d669e7958
             </div>
         </header>
 
