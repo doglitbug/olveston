@@ -330,6 +330,9 @@ a {
     position:absolute;
 }
 
+#ajaxDiv h2, p{
+ color: #fff;
+}
 #ajaxDiv {
     display: none;
     width: 500px;
@@ -339,7 +342,7 @@ a {
     left: 50%;
     margin-top: -250px;
     margin-left: -250px;
-    background-color: #f1c40f;
+    background-color: #000;
     border-radius: 5px;
     text-align: center;
     z-index: 101; /* 1 higher than the overlay layer */
