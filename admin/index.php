@@ -121,13 +121,13 @@ $prevFrame = $row[0];
 //Insert html for room/frame selection
 function generateNavigation($dbc, $nextFrame, $prevFrame) {
 //Do rooms first
-    echo "<div class='miniNav'>";
+    echo "<div class='margTop miniNav'>";
     echo "<form action='none'>";
 //Get list of rooms from database
     $selectQuery = "SELECT room_id, name FROM tbl_room";
     $result = mysqli_query($dbc, $selectQuery) or die("Couldn't get a list of rooms: " . mysqli_error($dbc));
     //TODO Check there are actually some rooms...
-    echo "<select name='roomSelector' onchange='changeRoom(this);'>";
+    echo "<select class='btn btn-primary dropdown-toggle' name='roomSelector' title='Choose room' onchange='changeRoom(this);'>";
 
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<option value ='{$row['room_id']}'";
@@ -138,20 +138,26 @@ function generateNavigation($dbc, $nextFrame, $prevFrame) {
         echo ">{$row['name']}</option>";
     }
     echo "</select></form>";
+	echo "<br/>";
 
-    //Link for previous frave
-    echo "<a href='";
+    //Link for previous frame
+	echo "<div class='col-lg-5 margLeft'>";
+    echo "<a class='glyphicon glyphicon-chevron-left' href='";
     echo $_SERVER['PHP_SELF'];
     echo "?frame=" . $prevFrame . "'";
-    echo ">Prev frame</a>";
+    echo " style='text-decoration: none' title='Previous frame'></a>";
+	echo " <br/> Previous frame ";
+	echo "</div>";
 
-    //Link for next frame    
-    echo "<a href='";
+    //Link for next frame 
+	echo "<div class='col-lg-5 margLeft'>";
+    echo "<a class='glyphicon glyphicon-chevron-right' href='";
     echo $_SERVER['PHP_SELF'];
     echo "?frame=" . $nextFrame . "'";
-    echo ">Next frame</a>";
-
-
+    echo " style='text-decoration: none' title='Next frame'></a>";
+	echo "<br/> Next Frame";
+	echo "</div>";
+	
     echo "</div>";
 }
 
@@ -227,16 +233,19 @@ if (isset($_POST['createHotspot'])) {
                 <li role="presentation" class="active"><a href="index.php">Make Hotspot</a></li>
                 <li role="presentation"><a href="createItem.php">Create Item</a></li>
                 <li role="presentation"><a href="editItem.php">Edit Item</a></li>
-                <?php generateNavigation($dbc, $nextFrame, $prevFrame); ?>
             </ul>
 
-            <div class="tab-content-outter">
-                <div class="tab-content-inner">
+            <div class="tab-content-outter-hotspot">
+				<div class="col-lg-12 topBtnsEditItem">
+					<?php generateNavigation($dbc, $nextFrame, $prevFrame); ?>   
+				</div>
+                <div class="col-lg-12 tab-content-inner">
                     <div id="home" class="tab-pane fade in active">
                         <fieldset>
                             <form name="pointform" method="post" runat="server">
-                                <div class="hotspotArea">	
-                                    <div class="col-lg-12 margBot margTop" id="pointer_div" onclick="point_it(event)" style = "position: relative; background-image:url('../images/rooms/<?php echo $_SESSION['frame_image']; ?>');width:931px;height:400px;">
+                                
+								<div class="hotspotArea">	
+                                    <div class="col-lg-12 margBot" id="pointer_div" onclick="point_it(event)" style = "position: relative; background-image:url('../images/rooms/<?php echo $_SESSION['frame_image']; ?>');width:931px;height:400px;">
                                         <img src="../images/glassPlusPlus.png" id="cross" style="position:absolute;visibility:hidden;z-index:2;width:40px;height:40px;">
                                         <?php
                                         //draw all the hotspots from the database
@@ -262,7 +271,9 @@ if (isset($_POST['createHotspot'])) {
                                         ?>
                                     </div>
                                 </div>
-                                <div class="col-lg-5 margLeft">
+								   
+                                                
+								<div class="col-lg-5 margLeft">
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <label for="itemNum">Item ID number: </label>
@@ -297,6 +308,7 @@ if (isset($_POST['createHotspot'])) {
                     </div>
                 </div>
             </div>
+			
             <div class="anel panel-default table margTop">
                 <?php
                 $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";

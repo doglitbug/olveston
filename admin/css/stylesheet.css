@@ -16,6 +16,9 @@ h3{
 	margin-top:0px;
     color: #fff;
 }
+.glyphicon {
+    font-size: 50px;
+}
 .col-md-6 {
     display: inline-block;
     vertical-align: middle;
@@ -99,7 +102,13 @@ h3{
 	border-left: solid 1px #000;
 	border-right: solid 1px #000;
 }
-
+.tab-content-outter-hotspot{
+	margin-top: 0px;
+	min-height: 800px;
+	border-bottom: solid 1px #000;
+	border-left: solid 1px #000;
+	border-right: solid 1px #000;
+}
 .tab-content-inner{
 	padding: 20px 0 0 20px;
 }
