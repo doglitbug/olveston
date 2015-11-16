@@ -24,15 +24,8 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 echo "<h2>$name</h2>";
-<<<<<<< HEAD
 echo "<div class='col-lg-12'><img src='images/items/$image' alt='$name' class='itemImg'></div>";
 echo "<div class='col-lg-12 popupMarg'><p>";
 echo nl2br($description);
 echo "</p></div>";
-=======
-echo "<img src='images/items/$image' alt='$name' class='itemImg'>";
-echo "<p>";
-echo nl2br($description);
-echo "</p>";
->>>>>>> 66889fbaebed775ff9ac7d50cd9cfcafa81faa68
 ?>
