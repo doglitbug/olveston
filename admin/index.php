@@ -311,7 +311,7 @@ if (isset($_POST['createHotspot'])) {
                 $selectString = "SELECT * from tbl_item ORDER BY item_id DESC";
                 $result = mysqli_query($dbc, $selectString);
                 echo("<table class='tableHead table-striped table-bordered table-condensed'>");
-                echo("<thead><tr><th>item ID</th><th>olveston ID</th><th>item name</th><th>item description</th><th>image</th></tr></thead></table>");
+                echo("<thead><tr><th>item ID</th><th>item name</th><th>item description</th><th>image</th><th>olveston ID</th></tr></thead></table>");
                 ?>
                 <div class="div-table-content">
                     <table class="table table-striped table-bordered table-condensed">

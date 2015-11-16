@@ -75,6 +75,9 @@ ul{list-style:none;padding:0px;}
     font-size: 50px;
     text-align: center;
 }
+.popupMarg{
+	margin-top:15px;
+}
 #page{
     padding-bottom: 20px;
 }
