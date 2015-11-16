@@ -12,10 +12,10 @@ if (isset($_POST['deleteItem'])) {
     deleteItemRecord($itemID, $connection);
     //TODO Confirmation
 } else if (isset($_POST['editItem'])) {
-    $item_id = $_POST['form_itemID'];
-    $olveston_id = $_POST['form_olvestonID'];
-    $name = $_POST['form_itemName'];
-    $description = $_POST['form_itemDescription'];
+    $item_id =  mysqli_real_escape_string($connection, trim($_POST['form_itemID']));
+    $olveston_id =  mysqli_real_escape_string($connection, trim($_POST['form_olvestonID']));
+    $name =  mysqli_real_escape_string($connection, trim($_POST['form_itemName']));
+    $description =  mysqli_real_escape_string($connection, trim($_POST['form_itemDescription']));
 
     //Get existing item image
     $selectQuery = "SELECT image FROM tbl_item WHERE item_id='$item_id'";
@@ -40,7 +40,7 @@ if (isset($_POST['deleteItem'])) {
         deleteImage($connection, $image);
     }
 } else if (isset($_POST['searchItem'])) {
-    $itemID = $_POST['form_itemID'];
+    $itemID =  mysqli_real_escape_string($connection, trim($_POST['form_itemID']));
     $test = searchItemRecord($itemID, $connection);
     $itemOlveston_id = $test['olveston_id'];
     $itemName = $test['name'];
