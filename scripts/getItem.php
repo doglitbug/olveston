@@ -25,5 +25,7 @@ if (mysqli_num_rows($result) == 0) {
 
 echo "<h2>$name</h2>";
 echo "<img src='images/items/$image' alt='$name' class='itemImg'>";
-echo "<p>$description</p>";
+echo "<p>";
+echo nl2br($description);
+echo "</p>";
 ?>
