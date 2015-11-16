@@ -41,7 +41,7 @@ function getHotspots($dbc) {
     }
 
     //reset result
-     $hotspotQuery = "SELECT coords,item_id,tbl_item.name,tbl_item.description "
+     $hotspotQuery = "SELECT coords,item_id,tbl_item.name AS name,tbl_item.description "
             . "FROM tbl_hotspot JOIN tbl_item USING (item_id) "
             . "WHERE frame_id=" . $_SESSION['frame_id'];
 
@@ -55,6 +55,7 @@ function getHotspots($dbc) {
             if (substr_count($row['coords'], ", ") == 1) {
                 //Get information on hotspot
                 $item_id=$row['item_id'];
+                $name=$row['name'];
                 
                 //Split coords into x and y
                 $coords = explode(", ", $row['coords']);
@@ -64,7 +65,7 @@ function getHotspots($dbc) {
 
                 echo "<div style='width:40px; height:40px; position: absolute; top: {$y}px; left:{$x}px;'>\n";
 
-                echo("<img src='images/glass.png' width='40px' height='40px' onclick='javascript:getItem($item_id)' />\n");
+                echo("<img src='images/glass.png' width='40px' title='$name' height='40px' onclick='javascript:getItem($item_id)' />\n");
 
                 echo "</div>\n";
             }

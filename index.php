@@ -34,28 +34,28 @@ require_once("scripts/hotspots.php");
 
 </div><!-- /content -->
 <div class="container">
-		<div class="divsize">
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="index.php">Room sections</a></li>
-                <li role="presentation"><a href="room.php">Rooms</a></li>
-            </ul>
-			
-			<div class=" tab-content tab-content-outter divsize">
-                <div class="tab-content tab-content-inner border">
-					<div class="col-lg-12 margTop">
-						<div id="outer">
-							<div class="wrap">
-								<ul>
-									<?php
-									getFrames($dbc);
-									?>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>	 
-		</div>	
+    <div class="divsize">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active"><a href="index.php">Room sections</a></li>
+            <li role="presentation"><a href="room.php">Rooms</a></li>
+        </ul>
+
+        <div class=" tab-content tab-content-outter divsize">
+            <div class="tab-content tab-content-inner border">
+                <div class="col-lg-12 margTop">
+                    <div id="outer">
+                        <div class="wrap">
+                            <ul>
+                                <?php
+                                getFrames($dbc);
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>	 
+    </div>	
 </div>
 
 
