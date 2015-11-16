@@ -21,7 +21,7 @@ if (isset($_POST['deleteItem'])) {
     $selectQuery = "SELECT image FROM tbl_item WHERE item_id='$item_id'";
     $result = mysqli_query($connection, $selectQuery) or die("Couldn't find image filename: " . mysqli_error($connection));
     $row = mysqli_fetch_assoc($result);
-    $newImage=$image = $row['image'];
+    $newImage = $image = $row['image'];
 
     //Check to see if a new image has been uploaded
     if ($_FILES['form_uploadImage']['error'] == 0) {
@@ -36,8 +36,8 @@ if (isset($_POST['deleteItem'])) {
 
     editItemRecord($item_id, $olveston_id, $name, $description, $newImage, $connection);
     //If the image has changed, delete the old one
-    if($newImage!=$image){
-        deleteImage($connection,$image);
+    if ($newImage != $image) {
+        deleteImage($connection, $image);
     }
 } else if (isset($_POST['searchItem'])) {
     $itemID = $_POST['form_itemID'];
@@ -60,11 +60,6 @@ function deleteImage($dbc, $imageName) {
     }
 }
 
-function createItemRecord($itemName, $olvestonID, $itemDescription, $itemImage, $connection) {
-    $insertQuery = "INSERT into tbl_item(name, olveston_id, description, image) values ('$itemName', '$olvestonID', '$itemDescription', '$itemImage')";
-    $result = mysqli_query($connection, $insertQuery);
-}
-
 function deleteItemRecord($itemID, $connection) {
     //Delete any linked hotspots.
     //The SQL server should take care of this due to cascade anyway.
@@ -76,13 +71,13 @@ function deleteItemRecord($itemID, $connection) {
     $result = mysqli_query($connection, $selectQuery) or die("Couldn't access database to find item: " . mysqli_error($connection));
     if (mysqli_num_rows($result) == 1) {
         $row = mysqli_fetch_assoc($result);
-        $image=$row['image'];
+        $image = $row['image'];
     }
 
     $deleteQuery = "DELETE FROM tbl_item WHERE item_id = $itemID";
     $result = mysqli_query($connection, $deleteQuery);
     //Flick off to deleteImage to check it can be removed
-    deleteImage($connection,$image);
+    deleteImage($connection, $image);
 }
 
 function editItemRecord($itemID, $olveston_id, $name, $description, $image, $connection) {
@@ -117,10 +112,6 @@ function searchItemRecord($itemID, $connection) {
             <div class="headerBack col-md-12">
                 <div class="headCont col-md-12">
                 </div>
-            </div>
-
-            <div class="navBar col-md-12">
-                <img src="../images/links.PNG" alt="nav" >
             </div>
         </header>
 

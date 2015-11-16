@@ -53,7 +53,7 @@ Date: 24/10/2015 - 4:31:57 PM
   `image` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`room_id`),
   UNIQUE KEY `room_id_UNIQUE` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;");
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;");
 
         //Create tbl_frame
         array_push($queries, "CREATE TABLE `tbl_frame` (
@@ -65,7 +65,7 @@ Date: 24/10/2015 - 4:31:57 PM
   UNIQUE KEY `frame_id_UNIQUE` (`frame_id`),
   KEY `room_frame_idx` (`room_id`),
   CONSTRAINT `room_frame` FOREIGN KEY (`room_id`) REFERENCES `tbl_room` (`room_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;");
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;");
 
         //Create tbl_item
         array_push($queries, "CREATE TABLE `tbl_item` (
@@ -76,7 +76,7 @@ Date: 24/10/2015 - 4:31:57 PM
   `olveston_id` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`item_id`),
   UNIQUE KEY `item_id_UNIQUE` (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;");
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;");
 
         //Create tbl_hotspot
         array_push($queries, "CREATE TABLE `tbl_hotspot` (
@@ -90,7 +90,7 @@ Date: 24/10/2015 - 4:31:57 PM
   KEY `frame_hotspot_idx` (`frame_id`),
   CONSTRAINT `frame_hotspot` FOREIGN KEY (`frame_id`) REFERENCES `tbl_frame` (`frame_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `hotspot_item` FOREIGN KEY (`item_id`) REFERENCES `tbl_item` (`item_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;");
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;");
 
 
 
@@ -98,41 +98,13 @@ Date: 24/10/2015 - 4:31:57 PM
 //Stuff example data into the database
         //tbl_room
         array_push($queries, "INSERT INTO `tbl_room` VALUES "
-                . "(1,'Billiards Room','The Billiards Room','billiards00.png'),"
-                . "(2,'Arrons Kitchen','Yup its a mess','kitchen00.png')");
+                . "(1,'Billiards Room','The Billiards Room','billiards00.png')");
 
         //tbl_frame
         array_push($queries, "INSERT INTO `tbl_frame` VALUES "
                 . "(1,1,1,'billiards01.png'),"
-                . "(4,1,2,'billiards02.png'),"
-                . "(6,2,1,'kitchen01.png'),"
-                . "(7,2,2,'kitchen02.png'),"
-                . "(8,2,3,'kitchen03.png'),"
-                . "(9,2,4,'kitchen04.png'),"
-                . "(10,2,5,'kitchen05.png'),"
-                . "(11,2,6,'kitchen06.png'),"
-                . "(12,2,7,'kitchen07.png'),"
-                . "(13,2,8,'kitchen08.png'),"
-                . "(14,1,3,'billiards03.png')");
-
-        //tbl_item
-        array_push($queries, "INSERT INTO `tbl_item` VALUES "
-                . "(1,'Samuels apron','Its red and has a frog on it, I was bored and added googly eyes','apron.jpg',NULL),"
-                . "(2,'Light switch','Its a lightswitch yo','switch.jpg',NULL),"
-                . "(7,'Majong','A majong set','blank.png','5774'),"
-                . "(8,'Picture','Large picture','blank.png','1'),"
-                . "(9,'Chair','A fancy chair','blank.png','5825'),"
-                . "(10,'Urn','Large urn','blank.png','5758')");
-
-        //tbl_hotspot
-        array_push($queries, "INSERT INTO `tbl_hotspot` VALUES "
-                . "(1,'234,0,356,371',6,1),"
-                . "(2,'922,343,955,401',6,2),"
-                . "(3,'339, 228, 364, 254',1,7),"
-                . "(4,'632, 39, 693, 128',1,8),"
-                . "(5,'548, 213, 548, 324, 599, 341, 635, 312, 630, 236, 598, 227, 591, 203',4,9),"
-                . "(6,'346, 244, 348, 398, 479, 399, 475, 285, 440, 267, 437, 235',4,9),"
-                . "(7,'83, 174, 12',14,10)");
+                . "(2,1,2,'billiards02.png'),"
+                . "(3,1,3,'billiards03.png')");
 
         do_queries($queries, $dbc);
         echo "All queries finished";

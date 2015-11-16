@@ -23,9 +23,6 @@ $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die("Cou
                 </div>
             </div>
 
-            <div class="navBar col-md-12">
-                <img src="../images/links.PNG" alt="nav" >
-            </div>
         </header>
 
         <div class="container">
